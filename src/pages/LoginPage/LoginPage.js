@@ -78,7 +78,7 @@ const LoginPage = ({navigation}) => {
             <Button
               mode="contained"
               style={styles.button}
-              onPress={() => navigation.navigate('Home')}>
+              onPress={() => navigation.navigate('MainApp')}>
               masuk
             </Button>
             <View style={styles.containTanya}>
