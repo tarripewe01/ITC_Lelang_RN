@@ -1,10 +1,17 @@
-import React from 'react';
+/* eslint-disable react/react-in-jsx-scope */
+import {useEffect} from 'react';
+
 import {Image, SafeAreaView, StyleSheet} from 'react-native';
 import {Colors} from '../../utils/Color/Colors';
 
 const Logo = require('../../assets/image/logo.png');
 
-const SplashPage = () => {
+const SplashPage = ({navigation}) => {
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.replace('Login');
+    }, 3000);
+  }, [navigation]);
   return (
     <SafeAreaView style={styles.container}>
       <Image source={Logo} />

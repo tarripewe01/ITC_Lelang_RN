@@ -1,6 +1,5 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
-import {NavigationContainer} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   Image,
@@ -11,7 +10,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
 import {Button, Divider, HelperText, TextInput} from 'react-native-paper';
 import {Colors} from '../../utils/Color/Colors';
 

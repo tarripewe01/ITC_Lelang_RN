@@ -9,6 +9,7 @@ import {
   RiwayatPage,
   SplashPage,
 } from '../pages';
+
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 
