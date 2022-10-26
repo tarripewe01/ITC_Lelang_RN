@@ -16,7 +16,7 @@ import {Colors} from '../../utils/Color/Colors';
 
 const Logo = require('../../assets/image/logo.png');
 
-const RegisterPage = () => {
+const LoginPage = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -38,17 +38,8 @@ const RegisterPage = () => {
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={styles.form}>
           <Image source={Logo} style={styles.logo} />
-          <Text style={styles.text}>Buat Akun</Text>
+          <Text style={styles.text}>masuk</Text>
           <View style={{marginHorizontal: 10}}>
-            <TextInput
-              mode="outlined"
-              label="Nama Lengkap"
-              style={styles.textInput}
-              activeOutlineColor={Colors.blue}
-            />
-            <HelperText type="error" visible={hasErrors()}>
-              Nama Lengkap harus diisi
-            </HelperText>
             <TextInput
               mode="outlined"
               label="Email"
@@ -58,63 +49,6 @@ const RegisterPage = () => {
             />
             <HelperText type="error" visible={hasErrors()}>
               Email harus diisi
-            </HelperText>
-            <TextInput
-              mode="outlined"
-              label="Telepon"
-              placeholder="+62 812 XXXX XXXX"
-              style={styles.textInput}
-              activeOutlineColor={Colors.blue}
-            />
-            <HelperText type="error" visible={hasErrors()}>
-              Telepon harus diisi
-            </HelperText>
-            <TextInput
-              mode="outlined"
-              label="Alamat Lengkap"
-              style={styles.textInput}
-              activeOutlineColor={Colors.blue}
-            />
-            <HelperText type="error" visible={hasErrors()}>
-              Alamat harus diisi
-            </HelperText>
-            <TextInput
-              mode="outlined"
-              label="No. KTP"
-              style={styles.textInput}
-              activeOutlineColor={Colors.blue}
-            />
-            <HelperText type="error" visible={hasErrors()}>
-              No. KTP harus diisi
-            </HelperText>
-            <TextInput
-              mode="outlined"
-              label="No. NPWP"
-              style={styles.textInput}
-              activeOutlineColor={Colors.blue}
-            />
-            <DropDownPicker
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems}
-              placeholder="Pilih Bank"
-              style={{borderColor: 'grey', color: 'grey'}}
-              key={value}
-            />
-            <HelperText type="error" visible={hasErrors()}>
-              Nama Bank harus diisi
-            </HelperText>
-            <TextInput
-              mode="outlined"
-              label="Nomor Rekening"
-              style={styles.textInput}
-              activeOutlineColor={Colors.blue}
-            />
-            <HelperText type="error" visible={hasErrors()}>
-              Nomor Rekening harus diisi
             </HelperText>
             <TextInput
               mode="outlined"
@@ -144,12 +78,12 @@ const RegisterPage = () => {
               mode="contained"
               onPress={() => console.log('Pressed')}
               style={styles.button}>
-              Daftar
+              masuk
             </Button>
             <View style={styles.containTanya}>
-              <Text>Sudah memiliki akun?</Text>
+              <Text>Belum memiliki akun?</Text>
               <TouchableOpacity>
-                <Text style={styles.linkMasuk}>Masuk</Text>
+                <Text style={styles.linkMasuk}>Daftar</Text>
               </TouchableOpacity>
             </View>
             <Divider />
@@ -166,7 +100,7 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default LoginPage;
 
 const styles = StyleSheet.create({
   container: {
