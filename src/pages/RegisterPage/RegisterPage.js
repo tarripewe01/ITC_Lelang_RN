@@ -16,7 +16,7 @@ import {Colors} from '../../utils/Color/Colors';
 
 const Logo = require('../../assets/image/logo.png');
 
-const RegisterPage = () => {
+const RegisterPage = ({navigation}) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -148,7 +148,7 @@ const RegisterPage = () => {
             </Button>
             <View style={styles.containTanya}>
               <Text>Sudah memiliki akun?</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.replace('Login')}>
                 <Text style={styles.linkMasuk}>Masuk</Text>
               </TouchableOpacity>
             </View>

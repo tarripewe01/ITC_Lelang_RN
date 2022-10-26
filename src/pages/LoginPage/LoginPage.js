@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
+import {NavigationContainer} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   Image,
@@ -16,7 +17,7 @@ import {Colors} from '../../utils/Color/Colors';
 
 const Logo = require('../../assets/image/logo.png');
 
-const LoginPage = () => {
+const LoginPage = ({navigation}) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -76,13 +77,13 @@ const LoginPage = () => {
             </View>
             <Button
               mode="contained"
-              onPress={() => console.log('Pressed')}
-              style={styles.button}>
+              style={styles.button}
+              onPress={() => navigation.navigate('Home')}>
               masuk
             </Button>
             <View style={styles.containTanya}>
               <Text>Belum memiliki akun?</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.replace('Register')}>
                 <Text style={styles.linkMasuk}>Daftar</Text>
               </TouchableOpacity>
             </View>
