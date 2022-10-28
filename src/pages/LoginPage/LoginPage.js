@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
@@ -16,8 +17,6 @@ import {Colors} from '../../utils/Color/Colors';
 const Logo = require('../../assets/image/logo.png');
 
 const LoginPage = ({navigation}) => {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
   const [items, setItems] = useState([
     {label: 'BNI', value: 'BNI'},
     {label: 'BRI', value: 'BRI'},

@@ -13,7 +13,7 @@ import Carousel from 'react-native-banner-carousel';
 import {Colors} from '../../../utils/Color/Colors';
 
 const BannerWidth = Dimensions.get('window').width;
-const BannerHeight = 300;
+const BannerHeight = 250;
 
 const images = [
   'https://mmc.kalteng.go.id/files/berita/22032022040304_0.jpeg',

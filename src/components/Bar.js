@@ -6,7 +6,7 @@ const Bar = () => {
     <StatusBar
       translucent={true}
       backgroundColor="transparent"
-      barStyle="default"
+      barStyle="dark-content"
     />
   );
 };

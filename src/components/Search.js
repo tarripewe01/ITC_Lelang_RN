@@ -9,7 +9,7 @@ const Search = () => {
     <View style={styles.containSearch}>
       <TouchableOpacity>
         <View style={styles.boxSearch}>
-          <Text>Cari mobil atau motor</Text>
+          <Text style={styles.text}>Cari mobil atau motor</Text>
           <MaterialCommunityIcons
             name="magnify"
             color={Colors.blue}
@@ -30,6 +30,9 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     height: 40,
     padding: 10,
+    marginHorizontal: 15,
+    marginTop: 10,
   },
   boxSearch: {flexDirection: 'row', justifyContent: 'space-between'},
+  text: {color: 'grey', fontSize: 12},
 });
