@@ -2,7 +2,14 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
-import {FlatList, LogBox, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  FlatList,
+  LogBox,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import Bar from '../../components/Bar';
 import Search from '../../components/Search';
 import {Colors} from '../../utils/Color/Colors';
@@ -97,7 +104,14 @@ const HomePage = ({navigation}) => {
             keyExtractor={data => data.id}
             data={data}
             numColumns={2}
-            renderItem={({item}) => <CardProdukLelang item={item} />}
+            renderItem={({item}) => (
+              <CardProdukLelang
+                item={item}
+                onPress={() => {
+                  navigation.navigate('Detail Kendaraan', {item: item});
+                }}
+              />
+            )}
           />
         </ScrollView>
       </View>

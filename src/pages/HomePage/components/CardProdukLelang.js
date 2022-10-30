@@ -7,9 +7,9 @@ import {Colors} from '../../../utils/Color/Colors';
 
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
-const CardProdukLelang = ({item}) => {
+const CardProdukLelang = ({item, onPress}) => {
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={onPress}>
       <Card
         style={{
           width: wp('46%'),

@@ -13,6 +13,7 @@ import SemuaKendaraan from './SemuaKendaraan/SemuaKendaraan';
 import MobilPage from './MobilPage/MobilPage';
 import MotorPage from './MotorPage/MotorPage';
 import BeritaPage from './BeritaPage/BeritaPage';
+import DetailKendaraan from './DetailKendaraan/DetailKendaraan';
 
 export {
   SplashPage,
@@ -30,4 +31,5 @@ export {
   MotorPage,
   MobilPage,
   BeritaPage,
+  DetailKendaraan,
 };

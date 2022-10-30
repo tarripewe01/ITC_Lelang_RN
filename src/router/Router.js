@@ -21,6 +21,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
 import {Colors} from '../utils/Color/Colors';
+import DetailKendaraan from '../pages/DetailKendaraan/DetailKendaraan';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -57,6 +58,13 @@ const Router = () => {
         name="Info & Berita"
         component={BeritaPage}
         options={{headerShown: true}}
+      />
+      <Stack.Screen
+        name="Detail Kendaraan"
+        component={DetailKendaraan}
+        options={{
+          headerShown: false,
+        }}
       />
     </Stack.Navigator>
   );
