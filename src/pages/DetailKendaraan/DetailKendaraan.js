@@ -1,14 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Button, Card} from 'react-native-paper';
+
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Header from '../../components/Header';
 import {Colors} from '../../utils/Color/Colors';
 import DetailBarang from './components/DetailBarang';
 import PhotoProduk from './components/PhotoProduk';
@@ -16,19 +12,13 @@ import PhotoProduk from './components/PhotoProduk';
 const DetailKendaraan = ({route, navigation}) => {
   return (
     <>
-      <View style={styles.containHeader}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.goBack('Home');
-          }}>
-          <MaterialCommunityIcons
-            name="arrow-left"
-            size={30}
-            style={{color: 'white'}}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>{route.params.item.title}</Text>
-      </View>
+      <Header
+        title={route.params.item.title}
+        onPress={() => {
+          navigation.goBack('Home');
+        }}
+      />
+
       <ScrollView>
         <PhotoProduk />
 
@@ -118,8 +108,7 @@ const DetailKendaraan = ({route, navigation}) => {
         <Button
           mode="contained"
           style={styles.button}
-          // onPress={() => navigation.navigate('MainApp')}
-        >
+          onPress={() => navigation.navigate('Bid', {item: route.params.item})}>
           Bid Sekarang
         </Button>
       </ScrollView>
@@ -157,20 +146,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
-  },
-  containHeader: {
-    marginTop: 40,
-    backgroundColor: Colors.blue,
-    height: 60,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 15,
-  },
-  headerTitle: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 20,
-    marginLeft: 10,
   },
   containLot: {
     backgroundColor: Colors.yellowOrange,

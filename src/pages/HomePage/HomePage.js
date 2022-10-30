@@ -2,21 +2,14 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
-import {
-  FlatList,
-  LogBox,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {FlatList, LogBox, ScrollView, StyleSheet, View} from 'react-native';
+
+import {Colors} from '../../utils/Color/Colors';
 import Bar from '../../components/Bar';
 import Search from '../../components/Search';
-import {Colors} from '../../utils/Color/Colors';
 import Banner from './components/Banner';
 import CardProduk from './components/CardProduk';
 import TitleLelang from './components/TitleLelang';
-
 import CardNews from './components/CardNews';
 import CardProdukLelang from './components/CardProdukLelang';
 

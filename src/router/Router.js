@@ -2,6 +2,7 @@ import React from 'react';
 import {
   AkunPage,
   BeritaPage,
+  BidPage,
   DisukaiPage,
   HomePage,
   JadwalLelangMobil,
@@ -62,6 +63,13 @@ const Router = () => {
       <Stack.Screen
         name="Detail Kendaraan"
         component={DetailKendaraan}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Bid"
+        component={BidPage}
         options={{
           headerShown: false,
         }}

@@ -13,6 +13,8 @@ import {Colors} from '../../utils/Color/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Card} from 'react-native-paper';
 
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+
 const Data = [
   {
     id: 1,
@@ -64,7 +66,7 @@ const MotorPage = () => {
           <TouchableOpacity>
             <Card
               style={{
-                width: 180,
+                width: wp('46%'),
                 marginRight: 10,
                 marginTop: 10,
                 marginBottom: 10,
