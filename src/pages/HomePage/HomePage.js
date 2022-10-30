@@ -2,25 +2,16 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
-import {
-  Animated,
-  FlatList,
-  LogBox,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  YellowBox,
-} from 'react-native';
-import {Card} from 'react-native-paper';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {FlatList, LogBox, ScrollView, StyleSheet, View} from 'react-native';
 import Bar from '../../components/Bar';
 import Search from '../../components/Search';
 import {Colors} from '../../utils/Color/Colors';
 import Banner from './components/Banner';
-import TitleLelang from './components/TitleLelang';
 import CardProduk from './components/CardProduk';
+import TitleLelang from './components/TitleLelang';
+
+import CardNews from './components/CardNews';
+import CardProdukLelang from './components/CardProdukLelang';
 
 const Data = [
   {
@@ -88,11 +79,10 @@ const HomePage = ({navigation}) => {
         />
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <View style={{flexDirection: 'row'}}>
-            <CardProduk type="mobil" />
-            <CardProduk type="mobil" />
-            <CardProduk type="mobil" />
-            <CardProduk type="mobil" />
-            <CardProduk type="mobil" />
+            <CardNews />
+            <CardNews />
+            <CardNews />
+            <CardNews />
           </View>
         </ScrollView>
       </View>
@@ -107,66 +97,7 @@ const HomePage = ({navigation}) => {
             keyExtractor={data => data.id}
             data={data}
             numColumns={2}
-            renderItem={({item}) => (
-              <TouchableOpacity>
-                <Card
-                  style={{
-                    width: 180,
-                    marginRight: 10,
-                    marginTop: 10,
-                    marginBottom: 10,
-                    height: 300,
-                  }}>
-                  <Card.Cover source={{uri: item.image}} />
-                  <Card.Content style={{paddingHorizontal: 5}}>
-                    <Text style={{fontWeight: 'bold', fontSize: 13}}>
-                      {item.title}
-                    </Text>
-                    <View style={{flexDirection: 'row', marginTop: 3}}>
-                      <MaterialCommunityIcons
-                        name="calendar"
-                        color={Colors.blackJet}
-                        size={12}
-                      />
-                      <Text
-                        style={{
-                          fontWeight: 'bold',
-                          fontSize: 10,
-                          color: Colors.blackJet,
-                          marginLeft: 3,
-                        }}>
-                        {item.date}
-                      </Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginTop: 3}}>
-                      <MaterialCommunityIcons
-                        name="map-marker"
-                        color={Colors.blackJet}
-                        size={12}
-                      />
-                      <Text
-                        style={{
-                          fontWeight: 'bold',
-                          fontSize: 10,
-                          color: Colors.blackJet,
-                          marginLeft: 3,
-                        }}>
-                        ITC {item.cabang}
-                      </Text>
-                    </View>
-                    <Text
-                      style={{
-                        fontWeight: 'bold',
-                        fontSize: 16,
-                        color: Colors.blue,
-                        marginTop: 10,
-                      }}>
-                      {item.harga}
-                    </Text>
-                  </Card.Content>
-                </Card>
-              </TouchableOpacity>
-            )}
+            renderItem={({item}) => <CardProdukLelang item={item} />}
           />
         </ScrollView>
       </View>

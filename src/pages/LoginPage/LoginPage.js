@@ -17,13 +17,6 @@ import {Colors} from '../../utils/Color/Colors';
 const Logo = require('../../assets/image/logo.png');
 
 const LoginPage = ({navigation}) => {
-  const [items, setItems] = useState([
-    {label: 'BNI', value: 'BNI'},
-    {label: 'BRI', value: 'BRI'},
-    {label: 'BCA', value: 'BCA'},
-    {label: 'BTN', value: 'BTN'},
-    {label: 'Mandiri', value: 'Mandiri'},
-  ]);
   const [text, setText] = React.useState('');
 
   const onChangeText = text => setText(text);

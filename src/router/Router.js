@@ -48,16 +48,6 @@ const Router = () => {
         component={MainApp}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name="Jadwal Lelang Mobil"
-        component={JadwalLelangMobil}
-        options={{headerShown: true}}
-      />
-      <Stack.Screen
-        name="Jadwal Lelang Motor"
-        component={JadwalLelangMotor}
-        options={{headerShown: true}}
-      /> */}
       <Stack.Screen
         name="Semua Kendaraan"
         component={SemuaKendaraan}
@@ -75,7 +65,7 @@ const Router = () => {
 const MainApp = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Lelang"
+      initialRouteName="Home"
       activeColor={Colors.white}
       barStyle={{backgroundColor: Colors.blue}}>
       <Tab.Screen

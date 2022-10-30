@@ -15,6 +15,7 @@ export const Colors = {
   blackChocolate: '#261C15',
   greyGainsboro: '#D9D9D9',
   lightGrey: '#CED3DC',
+  grey: '#A9A9A9',
   whiteBabyPowder: '#FDFFFC',
   whiteSnow: '#FCF7F8',
 };

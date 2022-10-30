@@ -1,12 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {Card} from 'react-native-paper';
 import {Colors} from '../../../utils/Color/Colors';
 
 const CardProduk = ({type, onPress}) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableWithoutFeedback onPress={onPress}>
       <Card style={styles.card}>
         {type === 'mobil' ? (
           <Image
@@ -35,7 +41,7 @@ const CardProduk = ({type, onPress}) => {
           </View>
         </View>
       </Card>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 };
 

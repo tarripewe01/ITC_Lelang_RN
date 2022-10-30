@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {
@@ -11,6 +12,8 @@ import {
 import {Colors} from '../../utils/Color/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Card} from 'react-native-paper';
+
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 const Data = [
   {
@@ -63,7 +66,7 @@ const MobilPage = () => {
           <TouchableOpacity>
             <Card
               style={{
-                width: 180,
+                width: wp('46%'),
                 marginRight: 10,
                 marginTop: 10,
                 marginBottom: 10,
