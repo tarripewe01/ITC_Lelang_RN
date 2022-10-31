@@ -10,22 +10,19 @@ import {
 import {Card} from 'react-native-paper';
 import {Colors} from '../../../utils/Color/Colors';
 
-const CardNews = ({type, onPress}) => {
+const CardNews = ({type, onPress, image, title, subtitle}) => {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <Card style={styles.card}>
         <View style={{flexDirection: 'row'}}>
-          <Image
-            source={{
-              uri: 'https://www.toyota.astra.co.id/sites/default/files/2021-11/1-avanza-purplish-silver.png',
-            }}
-            style={styles.imageMobil}
-          />
+          <Image source={image} style={styles.imageMobil} />
 
           <View style={styles.contentCard}>
-            <Text style={styles.text}>Berita Utama</Text>
+            <View style={{width: 130, paddingRight: 15}}>
+              <Text style={styles.text}>{title}</Text>
+            </View>
             <View>
-              <Text style={styles.sumber}>CNN </Text>
+              <Text style={styles.sumber}>{subtitle} </Text>
             </View>
           </View>
         </View>
@@ -37,7 +34,13 @@ const CardNews = ({type, onPress}) => {
 export default CardNews;
 
 const styles = StyleSheet.create({
-  imageMobil: {resizeMode: 'contain', width: 80, height: 80},
+  imageMobil: {
+    resizeMode: 'cover',
+    width: 70,
+    height: 70,
+    borderBottomRightRadius: 5,
+    borderTopRightRadius: 5,
+  },
   card: {
     width: 200,
     marginTop: 10,
@@ -46,6 +49,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.blue,
   },
   contentCard: {paddingHorizontal: 10, justifyContent: 'space-between'},
-  text: {fontWeight: '500', marginTop: 15, color: 'white'},
-  sumber: {fontSize: 12, textAlign: 'right', color: 'white', marginBottom: 5},
+  text: {
+    fontWeight: '500',
+    marginTop: 10,
+    color: 'white',
+    fontSize: 11,
+    textAlign: 'justify',
+  },
+  sumber: {fontSize: 10, textAlign: 'right', color: 'white', marginBottom: 5},
 });

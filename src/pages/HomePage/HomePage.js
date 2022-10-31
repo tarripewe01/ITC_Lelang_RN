@@ -12,6 +12,7 @@ import CardProduk from './components/CardProduk';
 import TitleLelang from './components/TitleLelang';
 import CardNews from './components/CardNews';
 import CardProdukLelang from './components/CardProdukLelang';
+import axios from 'axios';
 
 const Data = [
   {
@@ -45,10 +46,34 @@ const Data = [
 
 const HomePage = ({navigation}) => {
   const [data, setData] = useState(Data);
+  const [news, setNews] = useState([]);
+
+  // console.log('NEWS', news);
+  // console.log('DATA', data);
+
+  const loadNews = async () => {
+    await axios
+      .get(
+        'https://newsapi.org/v2/top-headlines?country=us&apiKey=30a3085dfea54609b4dfa04605e5c7d9',
+      )
+      .then(response => {
+        let dataNews = response.data.articles;
+        // console.log('DATANEWS', dataNews);
+
+        setNews(dataNews);
+      });
+  };
 
   useEffect(() => {
-    LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
+    loadNews();
   }, []);
+
+  const excerpt = str => {
+    if (str.length > 40) {
+      str = str.substring(0, 40) + '...';
+    }
+    return str;
+  };
 
   return (
     <ScrollView style={styles.pages} showsVerticalScrollIndicator={false}>
@@ -79,10 +104,22 @@ const HomePage = ({navigation}) => {
         />
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <View style={{flexDirection: 'row'}}>
-            <CardNews />
-            <CardNews />
-            <CardNews />
-            <CardNews />
+            {news.map((item, index) => {
+              return (
+                <View key={index}>
+                  <CardNews
+                    image={{
+                      uri: item.urlToImage,
+                    }}
+                    title={excerpt(item.title, 5)}
+                    // subtitle={item.source.name}
+                    onPress={() => {
+                      navigation.navigate('Info & Berita', {item: item});
+                    }}
+                  />
+                </View>
+              );
+            })}
           </View>
         </ScrollView>
       </View>
