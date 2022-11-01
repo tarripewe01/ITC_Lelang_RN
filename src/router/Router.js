@@ -87,7 +87,7 @@ const Router = () => {
 const MainApp = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Lelang"
       activeColor={Colors.white}
       barStyle={{backgroundColor: Colors.blue}}>
       <Tab.Screen
