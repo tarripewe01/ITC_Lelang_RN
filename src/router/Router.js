@@ -28,7 +28,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 const Router = () => {
   return (
-    <Stack.Navigator initialRouteName="MainApp">
+    <Stack.Navigator initialRouteName="Splash">
       <Stack.Screen
         name="Splash"
         component={SplashPage}
@@ -87,7 +87,7 @@ const Router = () => {
 const MainApp = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Akun"
+      initialRouteName="Home"
       activeColor={Colors.white}
       barStyle={{backgroundColor: Colors.blue}}>
       <Tab.Screen

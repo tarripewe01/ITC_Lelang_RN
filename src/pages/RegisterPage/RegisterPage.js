@@ -20,11 +20,8 @@ const RegisterPage = ({navigation}) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    {label: 'BNI', value: 'BNI'},
-    {label: 'BRI', value: 'BRI'},
-    {label: 'BCA', value: 'BCA'},
-    {label: 'BTN', value: 'BTN'},
-    {label: 'Mandiri', value: 'Mandiri'},
+    {label: 'Pria', value: 'Pria'},
+    {label: 'Wanita', value: 'Wanita'},
   ]);
   const [text, setText] = React.useState('');
 
@@ -59,40 +56,7 @@ const RegisterPage = ({navigation}) => {
             <HelperText type="error" visible={hasErrors()}>
               Email harus diisi
             </HelperText>
-            <TextInput
-              mode="outlined"
-              label="Telepon"
-              placeholder="+62 812 XXXX XXXX"
-              style={styles.textInput}
-              activeOutlineColor={Colors.blue}
-            />
-            <HelperText type="error" visible={hasErrors()}>
-              Telepon harus diisi
-            </HelperText>
-            <TextInput
-              mode="outlined"
-              label="Alamat Lengkap"
-              style={styles.textInput}
-              activeOutlineColor={Colors.blue}
-            />
-            <HelperText type="error" visible={hasErrors()}>
-              Alamat harus diisi
-            </HelperText>
-            <TextInput
-              mode="outlined"
-              label="No. KTP"
-              style={styles.textInput}
-              activeOutlineColor={Colors.blue}
-            />
-            <HelperText type="error" visible={hasErrors()}>
-              No. KTP harus diisi
-            </HelperText>
-            <TextInput
-              mode="outlined"
-              label="No. NPWP"
-              style={styles.textInput}
-              activeOutlineColor={Colors.blue}
-            />
+
             <DropDownPicker
               open={open}
               value={value}
@@ -100,22 +64,14 @@ const RegisterPage = ({navigation}) => {
               setOpen={setOpen}
               setValue={setValue}
               setItems={setItems}
-              placeholder="Pilih Bank"
+              placeholder="Gender"
               style={{borderColor: 'grey', color: 'grey'}}
               key={value}
             />
             <HelperText type="error" visible={hasErrors()}>
-              Nama Bank harus diisi
+              Gender harus diisi
             </HelperText>
-            <TextInput
-              mode="outlined"
-              label="Nomor Rekening"
-              style={styles.textInput}
-              activeOutlineColor={Colors.blue}
-            />
-            <HelperText type="error" visible={hasErrors()}>
-              Nomor Rekening harus diisi
-            </HelperText>
+
             <TextInput
               mode="outlined"
               label="Password"
