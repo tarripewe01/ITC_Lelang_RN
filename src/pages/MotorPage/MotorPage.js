@@ -6,12 +6,12 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {Colors} from '../../utils/Color/Colors';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Card} from 'react-native-paper';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Colors} from '../../utils/Color/Colors';
 
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
@@ -36,7 +36,7 @@ const Data = [
   },
 ];
 
-const MotorPage = () => {
+const MotorPage = ({navigation}) => {
   const [data, setData] = useState(Data);
   return (
     <View
@@ -63,7 +63,10 @@ const MotorPage = () => {
         data={data}
         numColumns={2}
         renderItem={({item}) => (
-          <TouchableOpacity>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              navigation.navigate('Detail Kendaraan', {item: item});
+            }}>
             <Card
               style={{
                 width: wp('46%'),
@@ -120,7 +123,7 @@ const MotorPage = () => {
                 </Text>
               </Card.Content>
             </Card>
-          </TouchableOpacity>
+          </TouchableWithoutFeedback>
         )}
       />
     </View>

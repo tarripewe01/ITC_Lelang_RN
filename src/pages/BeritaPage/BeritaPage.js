@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable no-shadow */
 import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -5,7 +6,7 @@ import axios from 'axios';
 
 import CardNews from './components/CardNews';
 
-const BeritaPage = () => {
+const BeritaPage = ({navigation}) => {
   const [news, setNews] = useState([]);
 
   const loadNews = async () => {
@@ -31,12 +32,17 @@ const BeritaPage = () => {
         keyExtractor={news => news.title}
         data={news}
         numColumns={2}
-        renderItem={({item}) => <CardNews item={item} />}
+        renderItem={({item}) => (
+          <CardNews
+            item={item}
+            onPress={() =>
+              navigation.navigate('Detail Info & Berita', {item: item})
+            }
+          />
+        )}
       />
     </View>
   );
 };
 
 export default BeritaPage;
-
-const styles = StyleSheet.create({});

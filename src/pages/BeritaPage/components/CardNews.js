@@ -6,7 +6,7 @@ import {Colors} from '../../../utils/Color/Colors';
 
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
-const CardNews = ({item}) => {
+const CardNews = ({item, onPress}) => {
   const excerpt = str => {
     if (str.length > 80) {
       str = str.substring(0, 80) + '...';
@@ -14,7 +14,7 @@ const CardNews = ({item}) => {
     return str;
   };
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={onPress}>
       <Card style={styles.containCard}>
         <Card.Cover source={{uri: item.urlToImage}} />
         <Card.Content style={{paddingHorizontal: 10}}>
