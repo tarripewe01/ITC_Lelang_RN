@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../utils/Color/Colors';
 
@@ -23,7 +23,7 @@ export default Header;
 
 const styles = StyleSheet.create({
   containHeader: {
-    marginTop: 40,
+    marginTop: Platform.OS === 'ios' ? 40 : 0,
     backgroundColor: Colors.blue,
     height: 60,
     flexDirection: 'row',
