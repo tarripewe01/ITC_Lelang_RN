@@ -112,9 +112,8 @@ const HomePage = ({navigation}) => {
                       uri: item.urlToImage,
                     }}
                     title={excerpt(item.title, 5)}
-                    // subtitle={item.source.name}
                     onPress={() => {
-                      navigation.navigate('Info & Berita', {item: item});
+                      navigation.navigate('Detail Info & Berita', {item: item});
                     }}
                   />
                 </View>

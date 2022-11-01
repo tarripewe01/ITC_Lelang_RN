@@ -15,6 +15,8 @@ import MotorPage from './MotorPage/MotorPage';
 import BeritaPage from './BeritaPage/BeritaPage';
 import DetailKendaraan from './DetailKendaraan/DetailKendaraan';
 import BidPage from './BidPage/BidPage';
+import DetailBeritaPage from './DetailBeritaPage/DetailBeritaPage';
+DetailBeritaPage;
 
 export {
   SplashPage,
@@ -34,4 +36,5 @@ export {
   BeritaPage,
   DetailKendaraan,
   BidPage,
+  DetailBeritaPage,
 };

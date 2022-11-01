@@ -3,10 +3,9 @@ import {
   AkunPage,
   BeritaPage,
   BidPage,
+  DetailBeritaPage,
   DisukaiPage,
   HomePage,
-  JadwalLelangMobil,
-  JadwalLelangMotor,
   LelangPage,
   LoginPage,
   RegisterPage,
@@ -15,14 +14,14 @@ import {
   SplashPage,
 } from '../pages';
 
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {Colors} from '../utils/Color/Colors';
 import DetailKendaraan from '../pages/DetailKendaraan/DetailKendaraan';
+import {Colors} from '../utils/Color/Colors';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -65,6 +64,13 @@ const Router = () => {
         component={DetailKendaraan}
         options={{
           headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Detail Info & Berita"
+        component={DetailBeritaPage}
+        options={{
+          headerShown: true,
         }}
       />
       <Stack.Screen
