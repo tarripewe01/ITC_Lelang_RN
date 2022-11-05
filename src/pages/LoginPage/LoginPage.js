@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   SafeAreaView,
@@ -11,15 +11,83 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Button, Divider, HelperText, TextInput} from 'react-native-paper';
-import {Colors} from '../../utils/Color/Colors';
+import { Button, Divider, HelperText, TextInput } from 'react-native-paper';
+import { Colors } from '../../utils/Color/Colors';
+import axios from 'axios';
 
 const Logo = require('../../assets/image/logo.png');
 
-const LoginPage = ({navigation}) => {
+const LoginPage = ({ navigation }) => {
   const [text, setText] = React.useState('');
+  const [email, setEmail] = useState('220155201001');
+  const [password, setPassword] = useState('12345678');
 
   const onChangeText = text => setText(text);
+
+  const onLogin = (value) => {
+    axios
+      .post('http://36.66.35.11:9500/sipa/request_token', {
+        username: value.email,
+        password: value.password,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  // const handleLogin = async (value) => {
+  //   const data = {
+  //     username: value.email,
+  //     password: value.password,
+  //   };
+  //   console.log('data', data);
+
+  //   const url = 'http://36.66.35.11:9500/sipa/request_token'
+  //   const res = await axios.post(
+  //     url,
+  //     {
+  //       username: value.email,
+  //       password: value.password,
+  //     },
+  //     {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       }
+  //     }
+  //   );
+  //   console.log('res', res);
+
+
+  // };
+  // const handleLogin = (value) => {
+  //   console.log('value', value);
+
+  //   const data = {
+  //     email: value.email,
+  //     password: value.password,
+  //   };
+  //   const url = 'http://36.66.35.11:9500/sipa/request_token';
+  //   fetch(url, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: {
+  //       username: value.email,
+  //       password: value.password,
+  //     }
+  //   })
+  //     .then((response) => response.json())
+  //     .then((json) => {
+  //       console.log('json', json);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
 
   const hasErrors = () => {
     return !text.includes('@');
@@ -30,13 +98,14 @@ const LoginPage = ({navigation}) => {
         <View style={styles.form}>
           <Image source={Logo} style={styles.logo} />
           <Text style={styles.text}>masuk</Text>
-          <View style={{marginHorizontal: 10}}>
+          <View style={{ marginHorizontal: 10 }}>
             <TextInput
               mode="outlined"
               label="Email"
               style={styles.textInput}
               activeOutlineColor={Colors.blue}
-              onChangeText={onChangeText}
+              onChangeText={email => setEmail(email)}
+              value={email}
             />
             <HelperText type="error" visible={hasErrors()}>
               Email harus diisi
@@ -48,11 +117,13 @@ const LoginPage = ({navigation}) => {
               right={<TextInput.Icon icon="eye" />}
               style={styles.textInput}
               activeOutlineColor={Colors.blue}
+              onChangeText={password => setPassword(password)}
+              value={password}
             />
             <HelperText type="error" visible={hasErrors()}>
               Password harus diisi
             </HelperText>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <Text style={styles.containSyarat}>
                 Anda telah mengetahui dan menyetujui{' '}
                 <TouchableOpacity>
@@ -68,7 +139,9 @@ const LoginPage = ({navigation}) => {
             <Button
               mode="contained"
               style={styles.button}
-              onPress={() => navigation.navigate('MainApp')}>
+              onPress={async () => {
+                await onLogin({ email, password });
+              }}>
               masuk
             </Button>
             <View style={styles.containTanya}>
@@ -80,7 +153,7 @@ const LoginPage = ({navigation}) => {
             <Divider />
             <View style={styles.containCS}>
               <Text>Mengalami Kendala Saat Mendaftar ?</Text>
-              <TouchableOpacity style={{marginBottom: 20}}>
+              <TouchableOpacity style={{ marginBottom: 20 }}>
                 <Text style={styles.linkCS}>Hubungi Customer Center</Text>
               </TouchableOpacity>
             </View>
@@ -139,7 +212,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     marginTop: 5,
   },
-  button: {marginVertical: 20, backgroundColor: Colors.blue},
+  button: { marginVertical: 20, backgroundColor: Colors.blue },
   containTanya: {
     flexDirection: 'row',
     textAlign: 'center',
@@ -151,7 +224,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 5,
   },
-  containCS: {alignSelf: 'center', marginVertical: 10},
+  containCS: { alignSelf: 'center', marginVertical: 10 },
   linkCS: {
     textAlign: 'center',
     color: Colors.blue,
