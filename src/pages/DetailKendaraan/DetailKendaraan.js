@@ -1,26 +1,53 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import Carousel from 'react-native-banner-carousel';
 import {Button, Card} from 'react-native-paper';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from '../../components/Header';
 import {Colors} from '../../utils/Color/Colors';
 import DetailBarang from './components/DetailBarang';
-import PhotoProduk from './components/PhotoProduk';
+import moment from 'moment';
+
+var currencyFormatter = require('currency-formatter');
+
+const BannerWidth = Dimensions.get('window').width;
+const BannerHeight = 250;
 
 const DetailKendaraan = ({route, navigation}) => {
   return (
     <>
       <Header
-        title={route.params.item.title}
+        title={route.params.item.nama_produk}
         onPress={() => {
           navigation.goBack('Home');
         }}
       />
 
       <ScrollView>
-        <PhotoProduk />
+        <Carousel
+          autoplay
+          autoplayTimeout={5000}
+          loop
+          index={0}
+          pageSize={BannerWidth}>
+          {route.params.item?.photo_path.map((image, idx) => (
+            <View key={idx}>
+              <Image
+                style={{width: BannerWidth, height: BannerHeight}}
+                source={{uri: 'https://itc-finance.herokuapp.com' + image}}
+              />
+            </View>
+          ))}
+        </Carousel>
 
         <Card style={styles.content}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -31,15 +58,25 @@ const DetailKendaraan = ({route, navigation}) => {
                   style={{color: Colors.blue}}
                 />
                 <Text style={{color: Colors.blue, marginLeft: 5, fontSize: 12}}>
-                  Favorite : 123
+                  Favorite : {route.params.item?.favorites.length}
                 </Text>
               </View>
-              <Text style={styles.title}>{route.params.item?.title}</Text>
+              <Text style={styles.title}>{route.params.item?.nama_produk}</Text>
               <Text>Harga Dasar</Text>
-              <Text style={styles.harga}>{route.params.item?.harga}</Text>
+              <Text style={styles.harga}>
+                {' '}
+                {currencyFormatter.format(route.params.item?.harga, {
+                  code: 'IDR',
+                })}
+              </Text>
               <View style={{flexDirection: 'row'}}>
                 <Text style={{marginRight: 10}}>Jadwal Lelang</Text>
-                <Text>: {route.params.item?.date}</Text>
+                <Text>
+                  :
+                  {moment(route.params.item?.tanggal_mulai).format(
+                    'DD/MM/YYYY',
+                  )}
+                </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
                 <Text style={{marginRight: 52}}>Cabang</Text>
@@ -48,7 +85,9 @@ const DetailKendaraan = ({route, navigation}) => {
             </View>
             <View style={styles.containLot}>
               <Text style={{fontWeight: '600'}}>Lot No.</Text>
-              <Text style={{fontWeight: 'bold', fontSize: 18}}>56</Text>
+              <Text style={{fontWeight: 'bold', fontSize: 18}}>
+                {route.params.item?.no_lot}
+              </Text>
             </View>
           </View>
         </Card>
@@ -57,60 +96,107 @@ const DetailKendaraan = ({route, navigation}) => {
           <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
             <View style={{justifyContent: 'center'}}>
               <Text style={styles.rate}>MESIN</Text>
-              <Text style={styles.rateText}>B</Text>
+              <Text style={styles.rateText}>
+                {route.params.item?.kondisi_mesin}
+              </Text>
             </View>
             <View>
               <Text style={styles.rate}>EKSTERIOR</Text>
-              <Text style={styles.rateText}>C</Text>
+              <Text style={styles.rateText}>
+                {route.params.item?.kondisi_exterior}
+              </Text>
             </View>
             <View>
               <Text style={styles.rate}>INTERIOR</Text>
-              <Text style={styles.rateText}>B</Text>
+              <Text style={styles.rateText}>
+                {route.params.item?.kondisi_interior}
+              </Text>
             </View>
           </View>
         </Card>
 
         <Card style={styles.content}>
           <Text style={styles.title}>Spesifikasi Kendaraan</Text>
-          <DetailBarang title="Merk" subtitle="MITSUBISHI" />
-          <DetailBarang title="Jenis" subtitle="FE 84 G" />
-          <DetailBarang title="Transmisi" subtitle="AT" />
-          <DetailBarang title="Kapasitas Mesin" subtitle="3908 CC" />
-          <DetailBarang title="Odometer" subtitle="999,999 KM" />
-          <DetailBarang title="Nomor Rangka" subtitle="MHMFE84P736JG" />
-          <DetailBarang title="Nomor Mesin" subtitle="MHMFE84P736JG" />
+          <DetailBarang
+            title="Merk"
+            subtitle={route.params.item?.merk_produk}
+          />
+          <DetailBarang
+            title="Jenis"
+            subtitle={route.params.item?.model_produk}
+          />
+          <DetailBarang
+            title="Transmisi"
+            subtitle={route.params.item?.transmisi}
+          />
+          <DetailBarang
+            title="Kapasitas Mesin"
+            subtitle={route.params.item?.kapasitas_mesin + ' CC'}
+          />
+          <DetailBarang
+            title="Odometer"
+            subtitle={route.params.item?.odometer + ' KM'}
+          />
+          <DetailBarang
+            title="Nomor Rangka"
+            subtitle={route.params.item?.no_rangka}
+          />
+          <DetailBarang
+            title="Nomor Mesin"
+            subtitle={route.params.item?.no_mesin}
+          />
         </Card>
 
         <Card style={styles.content}>
           <Text style={styles.title}>Dokumen Kendaraan</Text>
-          <DetailBarang title="Nomor Polisi" subtitle="KT 7801 EG" />
-          <DetailBarang title="Tahun" subtitle="2017" />
-          <DetailBarang title="STNK" subtitle="Ada" />
-          <DetailBarang title="BPKB" subtitle="14 Hari Kerja" />
-          <DetailBarang title="Fotokopi KTP" subtitle="Tidak Ada" />
-          <DetailBarang title="Form A" subtitle="Tidak Ada" />
-          <DetailBarang title="KEUR" subtitle="Tidak Ada" />
-          <DetailBarang title="Warna" subtitle="PUTIH" />
-          <DetailBarang title="Exp STNK" subtitle="09/04/2020" />
-          <DetailBarang title="Faktur" subtitle="Ada" />
-          <DetailBarang title="Kwitansi Blanko" subtitle="Tidak Ada" />
-          <DetailBarang title="SPH" subtitle="Tidak Ada" />
+          <DetailBarang
+            title="Nomor Polisi"
+            subtitle={route.params.item?.no_polisi}
+          />
+          <DetailBarang
+            title="Tahun"
+            subtitle={route.params.item?.tahun_produk}
+          />
+          <DetailBarang title="STNK" subtitle={route.params.item?.stnk} />
+          <DetailBarang title="BPKB" subtitle={route.params.item?.bpkb} />
+          <DetailBarang
+            title="Fotokopi KTP"
+            subtitle={route.params.item?.ktp}
+          />
+          <DetailBarang title="Form A" subtitle={route.params.item?.form_A} />
+          <DetailBarang title="KEUR" subtitle={route.params.item?.keur} />
+          <DetailBarang title="Warna" subtitle={route.params.item?.warna} />
+          <DetailBarang
+            title="Exp STNK"
+            subtitle={route.params.item?.exp_stnk}
+          />
+          <DetailBarang title="Faktur" subtitle={route.params.item?.faktur} />
+          <DetailBarang
+            title="Kwitansi Blanko"
+            subtitle={route.params.item?.kwitansi}
+          />
+          <DetailBarang title="SPH" subtitle={route.params.item?.sph} />
         </Card>
 
         <Card style={styles.content}>
           <Text style={styles.title}>Catatan Tambahan</Text>
-          <Text>
-            UNIT DI POOL JBA BALIKPAPAN // PIC ADE 0813-5024-8976 & PUTRA
-            0896-1893-4994 // WAJIB CEK UNIT & DOKUMEN SECARA LANGSUNG
+          <Text style={{textTransform: 'uppercase'}}>
+            {route.params.item?.catatan}
           </Text>
         </Card>
 
-        <Button
-          mode="contained"
-          style={styles.button}
-          onPress={() => navigation.navigate('Bid', {item: route.params.item})}>
-          Bid Sekarang
-        </Button>
+        {route.params.item?.status_lelang === 'Aktif' ? (
+          <Button
+            mode="contained"
+            style={styles.button}
+            onPress={() =>
+              navigation.navigate('Bid', {item: route.params.item})
+            }>
+            Bid Sekarang
+          </Button>
+        ) : (
+          ''
+        )}
       </ScrollView>
     </>
   );

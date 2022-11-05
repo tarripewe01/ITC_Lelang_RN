@@ -14,38 +14,8 @@ import CardNews from './components/CardNews';
 import CardProdukLelang from './components/CardProdukLelang';
 import axios from 'axios';
 
-const Data = [
-  {
-    id: 1,
-    title: 'MITSUBISHI STRADA TRITON 2.5 GLS',
-    image: 'https://picsum.photos/700',
-    date: '30 Oktober 2022',
-    time: '13:00 WIB',
-    cabang: 'Jakarta',
-    harga: 'Rp. 188.000.000',
-  },
-  {
-    id: 2,
-    title: 'HONDA REVO FIT 110 FI',
-    image: 'https://picsum.photos/700',
-    date: '30 Oktober 2022',
-    time: '13:00 WIB',
-    cabang: 'Jakarta',
-    harga: 'Rp. 7.000.000',
-  },
-  {
-    id: 3,
-    title: 'TOYOTA KIJANG INNOVA 2.0 G',
-    image: 'https://picsum.photos/700',
-    date: '25 Oktober 2022',
-    time: '13:00 WIB',
-    cabang: 'Medan',
-    harga: 'Rp. 263.000.000',
-  },
-];
-
 const HomePage = ({navigation}) => {
-  const [data, setData] = useState(Data);
+  const [data, setData] = useState([]);
   const [news, setNews] = useState([]);
 
   // console.log('NEWS', news);
@@ -64,8 +34,18 @@ const HomePage = ({navigation}) => {
       });
   };
 
+  const loadData = async () => {
+    await axios
+      .get('https://itc-finance.herokuapp.com/api/product')
+      .then(response => {
+        console.log(response.data);
+        setData(response.data);
+      });
+  };
+
   useEffect(() => {
     loadNews();
+    loadData();
   }, []);
 
   const excerpt = str => {

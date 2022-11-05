@@ -28,7 +28,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 const Router = () => {
   return (
-    <Stack.Navigator initialRouteName="Splash">
+    <Stack.Navigator initialRouteName="MainApp">
       <Stack.Screen
         name="Splash"
         component={SplashPage}

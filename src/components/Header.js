@@ -23,7 +23,7 @@ export default Header;
 
 const styles = StyleSheet.create({
   containHeader: {
-    marginTop: Platform.OS === 'ios' ? 40 : 0,
+    marginTop: Platform.OS === 'ios' ? 40 : 20,
     backgroundColor: Colors.blue,
     height: 60,
     flexDirection: 'row',

@@ -13,7 +13,7 @@ const images = [
   'https://s3.ap-southeast-1.amazonaws.com/moladin.assets/blog/wp-content/uploads/2021/10/13172813/e5230c9bfbc0af17cb3dfacc03f67ceb.jpg',
 ];
 
-const PhotoProduk = () => {
+const PhotoProduk = ({image}) => {
   return (
     <View>
       <Carousel
