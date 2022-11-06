@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -14,30 +14,27 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {Colors} from '../../utils/Color/Colors';
 
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import Axios from 'axios';
+import moment from 'moment';
 
-const Data = [
-  {
-    id: 1,
-    title: 'MITSUBISHI STRADA TRITON 2.5 GLS',
-    image: 'https://picsum.photos/700',
-    date: '30 Oktober 2022',
-    time: '13:00 WIB',
-    cabang: 'Jakarta',
-    harga: 'Rp. 188.000.000',
-  },
-  {
-    id: 2,
-    title: 'TOYOTA KIJANG INNOVA 2.0 G',
-    image: 'https://picsum.photos/700',
-    date: '25 Oktober 2022',
-    time: '13:00 WIB',
-    cabang: 'Medan',
-    harga: 'Rp. 263.000.000',
-  },
-];
+var currencyFormatter = require('currency-formatter');
 
 const MobilPage = ({navigation}) => {
-  const [data, setData] = useState(Data);
+  const [data, setData] = useState([]);
+
+  const loadData = async () => {
+    await Axios.get(
+      'https://itc-finance.herokuapp.com/api/product/filter/lelang?kategori=Mobil',
+    ).then(response => {
+      // console.log(response.data);
+      setData(response.data);
+    });
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <View
       style={{
@@ -75,10 +72,14 @@ const MobilPage = ({navigation}) => {
                 marginBottom: 10,
                 height: 300,
               }}>
-              <Card.Cover source={{uri: item.image}} />
+              <Card.Cover
+                source={{
+                  uri: 'https://itc-finance.herokuapp.com' + item.photo_path[0],
+                }}
+              />
               <Card.Content style={{paddingHorizontal: 5}}>
                 <Text style={{fontWeight: 'bold', fontSize: 13}}>
-                  {item.title}
+                  {item.nama_produk}
                 </Text>
                 <View style={{flexDirection: 'row', marginTop: 3}}>
                   <MaterialCommunityIcons
@@ -93,7 +94,7 @@ const MobilPage = ({navigation}) => {
                       color: Colors.blackJet,
                       marginLeft: 3,
                     }}>
-                    {item.date}
+                    {moment(item?.tanggal_mulai).format('DD/MM/YYYY')}
                   </Text>
                 </View>
                 <View style={{flexDirection: 'row', marginTop: 3}}>
@@ -119,7 +120,9 @@ const MobilPage = ({navigation}) => {
                     color: Colors.blue,
                     marginTop: 10,
                   }}>
-                  {item.harga}
+                  {currencyFormatter.format(item?.harga, {
+                    code: 'IDR',
+                  })}
                 </Text>
               </Card.Content>
             </Card>

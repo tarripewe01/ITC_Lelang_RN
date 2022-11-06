@@ -29,7 +29,9 @@ const CardProdukLelang = ({item, onPress}) => {
           }}
         />
         <Card.Content style={{paddingHorizontal: 5}}>
-          <Text style={{fontWeight: 'bold', fontSize: 13}}>{item.title}</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 13}}>
+            {item.nama_produk}
+          </Text>
           <View style={{flexDirection: 'row', marginTop: 3}}>
             <MaterialCommunityIcons
               name="calendar"
