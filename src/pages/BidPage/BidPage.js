@@ -1,6 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import Carousel from 'react-native-banner-carousel';
 import {Button, Card} from 'react-native-paper';
 
 import TextTicker from 'react-native-text-ticker';
@@ -8,7 +17,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import Header from '../../components/Header';
 import {Colors} from '../../utils/Color/Colors';
-import PhotoProduk from '../DetailKendaraan/components/PhotoProduk';
+
+var currencyFormatter = require('currency-formatter');
+
+const BannerWidth = Dimensions.get('window').width;
+const BannerHeight = 250;
 
 const BidPage = ({navigation, route}) => {
   return (
@@ -29,29 +42,56 @@ const BidPage = ({navigation, route}) => {
                 size={25}
               />
               <Text style={styles.textCabang}>
-                ITC {route.params.item.cabang}
+                ITC {route.params.item?.cabang}
               </Text>
             </View>
           </Card>
           <View style={styles.containLot}>
-            <Text style={styles.textLot}>Lot. {route.params.item.id}</Text>
+            <Text style={styles.textLot}>Lot. {route.params.item?.no_lot}</Text>
           </View>
 
           <Card style={{marginTop: 15}}>
-            <PhotoProduk />
+            <Carousel
+              autoplay
+              autoplayTimeout={5000}
+              loop
+              index={0}
+              pageSize={BannerWidth}>
+              {route.params.item?.photo_path.map((image, idx) => (
+                <View key={idx}>
+                  <Image
+                    style={{width: BannerWidth, height: BannerHeight}}
+                    source={{uri: 'https://itc-finance.herokuapp.com' + image}}
+                  />
+                </View>
+              ))}
+            </Carousel>
+
             <View>
-              <Text style={styles.title}> {route.params.item.title}</Text>
+              <Text style={styles.title}>
+                {' '}
+                {route.params.item?.nama_produk}
+              </Text>
             </View>
             <View style={styles.content}>
               <View>
                 <Text style={styles.textHarga}>Harga Dasar</Text>
                 <Text style={styles.textNominal}>
-                  {route.params.item.harga}
+                  {currencyFormatter.format(route.params.item?.harga, {
+                    code: 'IDR',
+                  })}
                 </Text>
               </View>
               <View>
                 <Text style={styles.textHarga}>Harga Penawaran Sekarang</Text>
-                <Text style={styles.textNominal}>Rp 0</Text>
+                <Text style={styles.textNominal}>
+                  {currencyFormatter.format(
+                    route.params.item?.bids[0]?.nominal_bid,
+                    {
+                      code: 'IDR',
+                    },
+                  )}
+                </Text>
               </View>
             </View>
           </Card>
@@ -61,18 +101,31 @@ const BidPage = ({navigation, route}) => {
               style={{flexDirection: 'row', justifyContent: 'space-around'}}>
               <View style={{justifyContent: 'center'}}>
                 <Text style={styles.rate}>MESIN</Text>
-                <Text style={styles.rateText}>B</Text>
+                <Text style={styles.rateText}>
+                  {route.params.item?.kondisi_mesin}
+                </Text>
               </View>
               <View>
                 <Text style={styles.rate}>EKSTERIOR</Text>
-                <Text style={styles.rateText}>C</Text>
+                <Text style={styles.rateText}>
+                  {route.params.item?.kondisi_exterior}
+                </Text>
               </View>
               <View>
                 <Text style={styles.rate}>INTERIOR</Text>
-                <Text style={styles.rateText}>B</Text>
+                <Text style={styles.rateText}>
+                  {route.params.item?.kondisi_interior}
+                </Text>
               </View>
             </View>
           </Card>
+
+          <View style={styles.containBidder}>
+            <Text
+              style={{fontWeight: 'bold', color: Colors.blue, fontSize: 16}}>
+              Total Bidder: {route.params.item?.bids?.length}
+            </Text>
+          </View>
         </View>
 
         <View style={styles.info}>
@@ -137,6 +190,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 15,
     paddingVertical: 15,
+    marginTop: 10,
   },
   textCabang: {fontWeight: 'bold', fontSize: 18, marginLeft: 5},
   containLot: {
@@ -184,7 +238,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.yellowOrange,
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 5,
+    marginTop: 15,
   },
   textTicker: {color: Colors.blue, fontWeight: '500', marginLeft: 5},
   input: {
@@ -194,5 +248,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: 'white',
     marginTop: 10,
+  },
+  containBidder: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: 'white',
+    width: '95%',
+    alignSelf: 'center',
   },
 });
