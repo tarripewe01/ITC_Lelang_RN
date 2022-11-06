@@ -6,46 +6,95 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Card} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../../utils/Color/Colors';
-
-const Data = [
-  {
-    id: 1,
-    title: 'MITSUBISHI STRADA TRITON 2.5 GLS',
-    image: 'https://picsum.photos/700',
-    date: '30 Oktober 2022',
-    time: '13:00 WIB',
-    cabang: 'Jakarta',
-    harga: 'Rp. 188.000.000',
-  },
-  {
-    id: 2,
-    title: 'HONDA REVO FIT 110 FI',
-    image: 'https://picsum.photos/700',
-    date: '30 Oktober 2022',
-    time: '13:00 WIB',
-    cabang: 'Jakarta',
-    harga: 'Rp. 7.000.000',
-  },
-  {
-    id: 3,
-    title: 'TOYOTA KIJANG INNOVA 2.0 G',
-    image: 'https://picsum.photos/700',
-    date: '1 November 2022',
-    time: '13:00 WIB',
-    cabang: 'Medan',
-    harga: 'Rp. 263.000.000',
-  },
-];
+import Axios from 'axios';
 
 const JadwalLelangMobil = ({navigation}) => {
-  const [data, setData] = useState(Data);
+  const [data, setData] = useState([]);
+  const [dataHariIni, setDataHariIni] = useState([]);
+
+  const loadData = async () => {
+    await Axios.get(
+      'https://itc-finance.herokuapp.com/api/product/filter/lelang?kategori=Mobil',
+    ).then(response => {
+      // console.log(response.data);
+      setData(response.data);
+    });
+  };
+
+  const loadDataHariIni = async () => {
+    await Axios.get(
+      'https://itc-finance.herokuapp.com/api/product/filter/lelang?kategori=Mobil',
+    ).then(response => {
+      if (response.data.status_lelang === 'Aktif') {
+        setDataHariIni(response.data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    loadData();
+    loadDataHariIni();
+  }, []);
 
   return (
     <View style={styles.container}>
+      {/* <Text>Lelang Hari Ini</Text>
+      {dataHariIni.map((item, index) => {
+        return (
+          <TouchableWithoutFeedback
+            key={index}
+            onPress={() =>
+              navigation.navigate('Detail Kendaraan', {item: item})
+            }>
+            <Card style={{marginBottom: 10}}>
+              <View style={{flexDirection: 'row'}}>
+                <View>
+                  <Image
+                    source={{
+                      uri:
+                        'https://itc-finance.herokuapp.com' +
+                        item.photo_path[0],
+                    }}
+                    style={styles.image}
+                  />
+                </View>
+                <View style={styles.content}>
+                  <View>
+                    <Text style={styles.title}>ITC {item.cabang}</Text>
+                    <View style={styles.containIcon}>
+                      <MaterialCommunityIcons
+                        name="calendar"
+                        color={Colors.grey}
+                        size={15}
+                      />
+                      <Text style={styles.textIcon}>{item.tanggal_mulai}</Text>
+                    </View>
+                    <View style={styles.containIcon}>
+                      <MaterialCommunityIcons
+                        name="timer"
+                        color={Colors.grey}
+                        size={15}
+                      />
+                      <Text style={styles.textIcon}>
+                        {item.waktu_mulai} WIB
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={styles.containLive}>
+                    <Text style={styles.textLive}>LIVE</Text>
+                  </View>
+                </View>
+              </View>
+            </Card>
+          </TouchableWithoutFeedback>
+        );
+      })}
+
+      <Text>Lelang Yang Akan Datang</Text> */}
       {data.map((item, index) => (
         <TouchableWithoutFeedback
           key={index}
@@ -53,7 +102,13 @@ const JadwalLelangMobil = ({navigation}) => {
           <Card style={{marginBottom: 10}}>
             <View style={{flexDirection: 'row'}}>
               <View>
-                <Image source={{uri: item.image}} style={styles.image} />
+                <Image
+                  source={{
+                    uri:
+                      'https://itc-finance.herokuapp.com' + item.photo_path[0],
+                  }}
+                  style={styles.image}
+                />
               </View>
               <View style={styles.content}>
                 <View>
@@ -64,7 +119,7 @@ const JadwalLelangMobil = ({navigation}) => {
                       color={Colors.grey}
                       size={15}
                     />
-                    <Text style={styles.textIcon}>{item.date}</Text>
+                    <Text style={styles.textIcon}>{item.tanggal_mulai}</Text>
                   </View>
                   <View style={styles.containIcon}>
                     <MaterialCommunityIcons
@@ -72,7 +127,7 @@ const JadwalLelangMobil = ({navigation}) => {
                       color={Colors.grey}
                       size={15}
                     />
-                    <Text style={styles.textIcon}>{item.time}</Text>
+                    <Text style={styles.textIcon}>{item.waktu_mulai} WIB</Text>
                   </View>
                 </View>
                 <View style={styles.containLive}>

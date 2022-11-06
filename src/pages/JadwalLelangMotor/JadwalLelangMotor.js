@@ -1,51 +1,49 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Image, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {Card} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../../utils/Color/Colors';
+import Axios from 'axios';
 
-const Data = [
-  {
-    id: 1,
-    title: 'MITSUBISHI STRADA TRITON 2.5 GLS',
-    image: 'https://picsum.photos/700',
-    date: '30 Oktober 2022',
-    time: '13:00 WIB',
-    cabang: 'Jakarta',
-    harga: 'Rp. 188.000.000',
-  },
-  {
-    id: 2,
-    title: 'HONDA REVO FIT 110 FI',
-    image: 'https://picsum.photos/700',
-    date: '30 Oktober 2022',
-    time: '13:00 WIB',
-    cabang: 'Jakarta',
-    harga: 'Rp. 7.000.000',
-  },
-  {
-    id: 3,
-    title: 'TOYOTA KIJANG INNOVA 2.0 G',
-    image: 'https://picsum.photos/700',
-    date: '1 November 2022',
-    time: '13:00 WIB',
-    cabang: 'Medan',
-    harga: 'Rp. 263.000.000',
-  },
-];
+const JadwalLelangMotor = ({navigation}) => {
+  const [data, setData] = useState([]);
 
-const JadwalLelangMotor = () => {
-  const [data, setData] = useState(Data);
+  const loadData = async () => {
+    await Axios.get(
+      'https://itc-finance.herokuapp.com/api/product/filter/lelang?kategori=Motor',
+    ).then(response => {
+      console.log(response.data);
+      setData(response.data);
+    });
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   return (
     <View style={styles.container}>
       {data.map((item, index) => (
-        <View key={index}>
+        <TouchableWithoutFeedback
+          key={index}
+          onPress={() => navigation.navigate('Detail Kendaraan', {item: item})}>
           <Card style={{marginBottom: 10}}>
             <View style={{flexDirection: 'row'}}>
               <View>
-                <Image source={{uri: item.image}} style={styles.image} />
+                <Image
+                  source={{
+                    uri:
+                      'https://itc-finance.herokuapp.com' + item.photo_path[0],
+                  }}
+                  style={styles.image}
+                />
               </View>
               <View style={styles.content}>
                 <View>
@@ -56,7 +54,7 @@ const JadwalLelangMotor = () => {
                       color={Colors.grey}
                       size={15}
                     />
-                    <Text style={styles.textIcon}>{item.date}</Text>
+                    <Text style={styles.textIcon}>{item.tanggal_mulai}</Text>
                   </View>
                   <View style={styles.containIcon}>
                     <MaterialCommunityIcons
@@ -64,7 +62,7 @@ const JadwalLelangMotor = () => {
                       color={Colors.grey}
                       size={15}
                     />
-                    <Text style={styles.textIcon}>{item.time}</Text>
+                    <Text style={styles.textIcon}>{item.waktu_mulai} WIB</Text>
                   </View>
                 </View>
                 <View style={styles.containLive}>
@@ -73,7 +71,7 @@ const JadwalLelangMotor = () => {
               </View>
             </View>
           </Card>
-        </View>
+        </TouchableWithoutFeedback>
       ))}
     </View>
   );
