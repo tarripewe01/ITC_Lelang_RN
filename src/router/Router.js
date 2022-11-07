@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   AkunPage,
   BeritaPage,
@@ -21,7 +21,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import DetailKendaraan from '../pages/DetailKendaraan/DetailKendaraan';
 import {Colors} from '../utils/Color/Colors';
 
@@ -29,30 +28,31 @@ const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 const Router = () => {
-  const [isLogin, setIsLogin] = React.useState(false);
+  // const [isLogin, setIsLogin] = React.useState(false);
 
-  const getToken = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token');
-      console.log(token);
-      setIsLogin(token);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const getToken = async () => {
+  //   try {
+  //     const token = await AsyncStorage.getItem('token');
+  //     if (token === null) return;
+  //     console.log('TOKEN', token);
+  //     setIsLogin(token);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
-  useEffect(() => {
-    getToken();
-  }, []);
+  // console.log('ISLOGIN', isLogin);
+
+  // useEffect(() => {
+  //   getToken();
+  // }, []);
   return (
-    <Stack.Navigator initialRouteName="MainApp">
+    <Stack.Navigator initialRouteName="Splash">
       <Stack.Screen
         name="Splash"
         component={SplashPage}
         options={{headerShown: false}}
       />
-      {/* {!isLogin ? ( */}
-      {/* <> */}
       <Stack.Screen
         name="Register"
         component={RegisterPage}
@@ -63,9 +63,7 @@ const Router = () => {
         component={LoginPage}
         options={{headerShown: false}}
       />
-      {/* </> */}
-      {/* // ) : ( */}
-      {/* <> */}
+
       <Stack.Screen
         name="MainApp"
         component={MainApp}
@@ -109,8 +107,6 @@ const Router = () => {
           headerShown: true,
         }}
       />
-      {/* </> */}
-      {/* )} */}
     </Stack.Navigator>
   );
 };
@@ -118,7 +114,7 @@ const Router = () => {
 const MainApp = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Akun"
+      initialRouteName="Home"
       activeColor={Colors.white}
       barStyle={{backgroundColor: Colors.blue}}>
       <Tab.Screen

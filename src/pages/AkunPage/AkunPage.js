@@ -1,11 +1,24 @@
 /* eslint-disable react-native/no-inline-styles */
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import Gap from '../../components/Gap';
-import {Colors} from '../../utils/Color/Colors';
 import ListOption from './components/ListOption';
 
 const AkunPage = ({navigation}) => {
+  const removeToken = async () => {
+    try {
+      await AsyncStorage.removeItem('token');
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleLogout = () => {
+    removeToken();
+    navigation.replace('Login');
+  };
+
   return (
     <View
       style={{
@@ -39,17 +52,13 @@ const AkunPage = ({navigation}) => {
         <Gap height={10} />
         <ListOption title="Pusat Bantuan" />
         <Gap height={10} />
-        <ListOption title="Logout" />
+        <ListOption
+          title="Logout"
+          // onPress={handleLogout()}
+        />
       </View>
     </View>
   );
 };
 
 export default AkunPage;
-
-const styles = StyleSheet.create({
-  button: {
-    marginVertical: 20,
-    backgroundColor: Colors.blue,
-  },
-});

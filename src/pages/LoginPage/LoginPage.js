@@ -36,7 +36,7 @@ const LoginPage = ({navigation}) => {
     if (email !== '' && password !== '') {
       setLoading(true);
       try {
-        const response = await axios.post('http://192.168.1.6:9000/api/auth', {
+        const response = await axios.post('http://192.168.1.5:9000/api/auth', {
           email: email,
           password: password,
         });
@@ -45,8 +45,8 @@ const LoginPage = ({navigation}) => {
         if (response.status === 200) {
           await AsyncStorage.setItem('token', data.token);
           setLoading(false);
-          // navigation.replace('MainApp');
-          // console.log('BERHASIL LOGIN');
+          navigation.replace('MainApp');
+          console.log('BERHASIL LOGIN');
         }
       } catch (error) {
         setLoading(false);
