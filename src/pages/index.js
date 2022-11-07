@@ -16,7 +16,7 @@ import BeritaPage from './BeritaPage/BeritaPage';
 import DetailKendaraan from './DetailKendaraan/DetailKendaraan';
 import BidPage from './BidPage/BidPage';
 import DetailBeritaPage from './DetailBeritaPage/DetailBeritaPage';
-DetailBeritaPage;
+import PengaturanPage from './PengaturanPage/Pengaturan';
 
 export {
   SplashPage,
@@ -37,4 +37,5 @@ export {
   DetailKendaraan,
   BidPage,
   DetailBeritaPage,
+  PengaturanPage,
 };

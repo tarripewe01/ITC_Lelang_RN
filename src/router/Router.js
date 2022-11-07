@@ -8,6 +8,7 @@ import {
   HomePage,
   LelangPage,
   LoginPage,
+  PengaturanPage,
   RegisterPage,
   RiwayatPage,
   SemuaKendaraan,
@@ -28,10 +29,12 @@ const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 const Router = () => {
-  const [isLogin, setIsLogin] = React.useState(true);
+  const [isLogin, setIsLogin] = React.useState(false);
+
   const getToken = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
+      console.log(token);
       setIsLogin(token);
     } catch (e) {
       console.log(e);
@@ -42,65 +45,72 @@ const Router = () => {
     getToken();
   }, []);
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="MainApp">
       <Stack.Screen
         name="Splash"
         component={SplashPage}
         options={{headerShown: false}}
       />
-      {!isLogin ? (
-        <>
-          <Stack.Screen
-            name="Register"
-            component={RegisterPage}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Login"
-            component={LoginPage}
-            options={{headerShown: false}}
-          />
-        </>
-      ) : (
-        <>
-          <Stack.Screen
-            name="MainApp"
-            component={MainApp}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Semua Kendaraan"
-            component={SemuaKendaraan}
-            options={{headerShown: true}}
-          />
-          <Stack.Screen
-            name="Info & Berita"
-            component={BeritaPage}
-            options={{headerShown: true}}
-          />
-          <Stack.Screen
-            name="Detail Kendaraan"
-            component={DetailKendaraan}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Detail Info & Berita"
-            component={DetailBeritaPage}
-            options={{
-              headerShown: true,
-            }}
-          />
-          <Stack.Screen
-            name="Bid"
-            component={BidPage}
-            options={{
-              headerShown: false,
-            }}
-          />
-        </>
-      )}
+      {/* {!isLogin ? ( */}
+      {/* <> */}
+      <Stack.Screen
+        name="Register"
+        component={RegisterPage}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginPage}
+        options={{headerShown: false}}
+      />
+      {/* </> */}
+      {/* // ) : ( */}
+      {/* <> */}
+      <Stack.Screen
+        name="MainApp"
+        component={MainApp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Semua Kendaraan"
+        component={SemuaKendaraan}
+        options={{headerShown: true}}
+      />
+      <Stack.Screen
+        name="Info & Berita"
+        component={BeritaPage}
+        options={{headerShown: true}}
+      />
+      <Stack.Screen
+        name="Detail Kendaraan"
+        component={DetailKendaraan}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Detail Info & Berita"
+        component={DetailBeritaPage}
+        options={{
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen
+        name="Bid"
+        component={BidPage}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Pengaturan Akun"
+        component={PengaturanPage}
+        options={{
+          headerShown: true,
+        }}
+      />
+      {/* </> */}
+      {/* )} */}
     </Stack.Navigator>
   );
 };
@@ -108,7 +118,7 @@ const Router = () => {
 const MainApp = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Lelang"
+      initialRouteName="Akun"
       activeColor={Colors.white}
       barStyle={{backgroundColor: Colors.blue}}>
       <Tab.Screen

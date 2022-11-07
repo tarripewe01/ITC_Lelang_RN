@@ -45,7 +45,7 @@ const LoginPage = ({navigation}) => {
         if (response.status === 200) {
           await AsyncStorage.setItem('token', data.token);
           setLoading(false);
-          navigation.replace('MainApp');
+          // navigation.replace('MainApp');
           // console.log('BERHASIL LOGIN');
         }
       } catch (error) {
