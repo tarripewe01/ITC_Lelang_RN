@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 import React, {useState} from 'react';
 import {
   Image,
@@ -11,19 +13,67 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+
 import {Button, Divider, HelperText, TextInput} from 'react-native-paper';
 import {Colors} from '../../utils/Color/Colors';
 
 const Logo = require('../../assets/image/logo.png');
 
 const LoginPage = ({navigation}) => {
-  const [text, setText] = React.useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const onChangeText = text => setText(text);
+  const handleLogin = async () => {
+    if (email === '') {
+      setEmailError('Email tidak boleh kosong');
+    } else if (password === '') {
+      setPasswordError('Password tidak boleh kosong');
+    }
 
-  const hasErrors = () => {
-    return !text.includes('@');
+    if (email !== '' && password !== '') {
+      setLoading(true);
+      try {
+        const response = await axios.post('http://192.168.1.6:9000/api/auth', {
+          email: email,
+          password: password,
+        });
+        const data = response.data;
+        console.log(data);
+        await AsyncStorage.setItem('token', data.token);
+        setLoading(false);
+        navigation.replace('MainApp');
+        console.log('BERHASIL LOGIN');
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
+    }
   };
+
+  //   await axios({
+  //     method: 'post',
+  //     url: 'http://192.168.1.6:9000/api/auth',
+  //     data: {
+  //       email: email,
+  //       password: password,
+  //     },
+  //   })
+  //     .then(response => {
+  //       console.log(response.data);
+  //       if (response.status === 200) {
+  //         AsyncStorage.setItem('token', response.data.token);
+  //         // navigation.navigate('MainApp');
+  //         console.log('Login Berhasil');
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
@@ -36,11 +86,10 @@ const LoginPage = ({navigation}) => {
               label="Email"
               style={styles.textInput}
               activeOutlineColor={Colors.blue}
-              onChangeText={onChangeText}
+              value={email}
+              onChangeText={text => setEmail(text)}
             />
-            <HelperText type="error" visible={hasErrors()}>
-              Email harus diisi
-            </HelperText>
+            <HelperText type="error">{emailError}</HelperText>
             <TextInput
               mode="outlined"
               label="Password"
@@ -48,10 +97,10 @@ const LoginPage = ({navigation}) => {
               right={<TextInput.Icon icon="eye" />}
               style={styles.textInput}
               activeOutlineColor={Colors.blue}
+              value={password}
+              onChangeText={text => setPassword(text)}
             />
-            <HelperText type="error" visible={hasErrors()}>
-              Password harus diisi
-            </HelperText>
+            <HelperText type="error">{passwordError}</HelperText>
             <View style={{flexDirection: 'row'}}>
               <Text style={styles.containSyarat}>
                 Anda telah mengetahui dan menyetujui{' '}
@@ -68,7 +117,7 @@ const LoginPage = ({navigation}) => {
             <Button
               mode="contained"
               style={styles.button}
-              onPress={() => navigation.navigate('MainApp')}>
+              onPress={handleLogin}>
               masuk
             </Button>
             <View style={styles.containTanya}>
