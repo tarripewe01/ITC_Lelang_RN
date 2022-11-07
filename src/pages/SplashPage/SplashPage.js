@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/react-in-jsx-scope */
-import {useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useEffect, useState} from 'react';
 
 import {Image, SafeAreaView, StyleSheet} from 'react-native';
 import {Colors} from '../../utils/Color/Colors';
@@ -9,9 +11,28 @@ const Logo = require('../../assets/image/logo.png');
 const SplashPage = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('Login');
+      if (isLogin) {
+        navigation.replace('MainApp');
+      } else {
+        navigation.replace('Login');
+      }
     }, 3000);
-  }, [navigation]);
+  }, []);
+
+  const [isLogin, setIsLogin] = useState(true);
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      setIsLogin(token);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getToken();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <Image source={Logo} />

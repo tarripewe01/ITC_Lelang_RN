@@ -42,37 +42,18 @@ const LoginPage = ({navigation}) => {
         });
         const data = response.data;
         console.log(data);
-        await AsyncStorage.setItem('token', data.token);
-        setLoading(false);
-        navigation.replace('MainApp');
-        console.log('BERHASIL LOGIN');
+        if (response.status === 200) {
+          await AsyncStorage.setItem('token', data.token);
+          setLoading(false);
+          navigation.replace('MainApp');
+          // console.log('BERHASIL LOGIN');
+        }
       } catch (error) {
         setLoading(false);
         console.log(error);
       }
     }
   };
-
-  //   await axios({
-  //     method: 'post',
-  //     url: 'http://192.168.1.6:9000/api/auth',
-  //     data: {
-  //       email: email,
-  //       password: password,
-  //     },
-  //   })
-  //     .then(response => {
-  //       console.log(response.data);
-  //       if (response.status === 200) {
-  //         AsyncStorage.setItem('token', response.data.token);
-  //         // navigation.navigate('MainApp');
-  //         console.log('Login Berhasil');
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -118,7 +99,7 @@ const LoginPage = ({navigation}) => {
               mode="contained"
               style={styles.button}
               onPress={handleLogin}>
-              masuk
+              {loading ? 'Loading...' : 'Masuk'}
             </Button>
             <View style={styles.containTanya}>
               <Text>Belum memiliki akun?</Text>

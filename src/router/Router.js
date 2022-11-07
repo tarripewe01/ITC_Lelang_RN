@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   AkunPage,
   BeritaPage,
@@ -20,6 +20,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import DetailKendaraan from '../pages/DetailKendaraan/DetailKendaraan';
 import {Colors} from '../utils/Color/Colors';
 
@@ -27,6 +28,19 @@ const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 const Router = () => {
+  const [isLogin, setIsLogin] = React.useState(true);
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      setIsLogin(token);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getToken();
+  }, []);
   return (
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
@@ -34,52 +48,59 @@ const Router = () => {
         component={SplashPage}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="Register"
-        component={RegisterPage}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Login"
-        component={LoginPage}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="MainApp"
-        component={MainApp}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Semua Kendaraan"
-        component={SemuaKendaraan}
-        options={{headerShown: true}}
-      />
-      <Stack.Screen
-        name="Info & Berita"
-        component={BeritaPage}
-        options={{headerShown: true}}
-      />
-      <Stack.Screen
-        name="Detail Kendaraan"
-        component={DetailKendaraan}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Detail Info & Berita"
-        component={DetailBeritaPage}
-        options={{
-          headerShown: true,
-        }}
-      />
-      <Stack.Screen
-        name="Bid"
-        component={BidPage}
-        options={{
-          headerShown: false,
-        }}
-      />
+      {!isLogin ? (
+        <>
+          <Stack.Screen
+            name="Register"
+            component={RegisterPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginPage}
+            options={{headerShown: false}}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen
+            name="MainApp"
+            component={MainApp}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Semua Kendaraan"
+            component={SemuaKendaraan}
+            options={{headerShown: true}}
+          />
+          <Stack.Screen
+            name="Info & Berita"
+            component={BeritaPage}
+            options={{headerShown: true}}
+          />
+          <Stack.Screen
+            name="Detail Kendaraan"
+            component={DetailKendaraan}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Detail Info & Berita"
+            component={DetailBeritaPage}
+            options={{
+              headerShown: true,
+            }}
+          />
+          <Stack.Screen
+            name="Bid"
+            component={BidPage}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </>
+      )}
     </Stack.Navigator>
   );
 };
