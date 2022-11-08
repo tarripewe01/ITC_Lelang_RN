@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   AkunPage,
   BeritaPage,
@@ -23,31 +23,34 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import DetailKendaraan from '../pages/DetailKendaraan/DetailKendaraan';
 import {Colors} from '../utils/Color/Colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 const Router = () => {
-  // const [isLogin, setIsLogin] = React.useState(false);
+  const [isLogin, setIsLogin] = React.useState(false);
 
-  // const getToken = async () => {
-  //   try {
-  //     const token = await AsyncStorage.getItem('token');
-  //     if (token === null) return;
-  //     console.log('TOKEN', token);
-  //     setIsLogin(token);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      if (token === null) {
+        return;
+      }
+      console.log('TOKEN', token);
+      setIsLogin(token);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-  // console.log('ISLOGIN', isLogin);
+  console.log('ISLOGIN', isLogin);
 
-  // useEffect(() => {
-  //   getToken();
-  // }, []);
+  useEffect(() => {
+    getToken();
+  }, []);
   return (
-    <Stack.Navigator initialRouteName="Pengaturan Akun">
+    <Stack.Navigator initialRouteName="Splash">
       <Stack.Screen
         name="Splash"
         component={SplashPage}
@@ -63,7 +66,6 @@ const Router = () => {
         component={LoginPage}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name="MainApp"
         component={MainApp}

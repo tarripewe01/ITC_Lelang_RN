@@ -15,7 +15,8 @@ const Pengaturan = () => {
   const [ktp, setKtp] = React.useState('');
   const [npwp, setNpwp] = React.useState('');
   const [bank, setBank] = React.useState('');
-  const [rek, setRek] = React.useState('');
+  const [bank_account, setRek] = React.useState('');
+  const [address, setAddress] = React.useState('');
 
   const [loading, setLoading] = React.useState(false);
 
@@ -23,17 +24,17 @@ const Pengaturan = () => {
     setLoading(true);
 
     const token = await AsyncStorage.getItem('token');
-
-    const formData = {
-      nama,
-      email,
-      phone,
-      ktp,
-      npwp,
-      bank,
-      rek,
+    console.log('tok', token);
+    const data = {
+      phone: phone,
+      address: address,
+      ktp: ktp,
+      npwp: npwp,
+      bank: bank,
+      bank_account: bank_account,
     };
-
+    //dimana debugnya ni?
+    console.log('data', data);
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -43,17 +44,15 @@ const Pengaturan = () => {
     try {
       const response = await axios.post(
         'http://192.168.1.5:9000/api/profile',
-        formData,
+        data,
         config,
       );
       // const data = response.data;
-      console.log(response);
-      // if (response.status === 200) {
-      //   await AsyncStorage.setItem('token', data.token);
-      //   setLoading(false);
-      //   navigation.replace('MainApp');
-      //   console.log('BERHASIL LOGIN');
-      // }
+      console.log(response.data);
+      if (response.status === 200) {
+        await AsyncStorage.setItem('profile', response.data);
+        setLoading(false);
+      }
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -66,8 +65,8 @@ const Pengaturan = () => {
         <Input
           placeholder="Nama Lengkap"
           title="Nama Lengkap :"
-          onChangeText={text => setNama(text)}
-          value={nama}
+          onChangeText={text => setAddress(text)}
+          value={address}
         />
         <Input placeholder="test@gmail.com" title="Email :" value={email} />
         <Input
@@ -98,7 +97,7 @@ const Pengaturan = () => {
           placeholder="No. Rekening"
           title="No. Rekening :"
           onChangeText={text => setRek(text)}
-          value={rek}
+          value={bank_account}
         />
       </View>
 

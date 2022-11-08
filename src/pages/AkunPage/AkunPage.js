@@ -6,18 +6,19 @@ import Gap from '../../components/Gap';
 import ListOption from './components/ListOption';
 
 const AkunPage = ({navigation}) => {
-  const removeToken = async () => {
+  const handleLogout = async () => {
+    console.log('click');
     try {
       await AsyncStorage.removeItem('token');
+      navigation.replace('Splash');
     } catch (e) {
       console.log(e);
     }
   };
 
-  const handleLogout = () => {
-    removeToken();
-    navigation.replace('Login');
-  };
+  // const handleLogout = () => {
+  //   removeToken();
+  // };
 
   return (
     <View
@@ -52,10 +53,7 @@ const AkunPage = ({navigation}) => {
         <Gap height={10} />
         <ListOption title="Pusat Bantuan" />
         <Gap height={10} />
-        <ListOption
-          title="Logout"
-          // onPress={handleLogout()}
-        />
+        <ListOption title="Logout" onPress={handleLogout} />
       </View>
     </View>
   );
