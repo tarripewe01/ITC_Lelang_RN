@@ -12,14 +12,16 @@ const SplashPage = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
       if (isLogin) {
-        navigation.replace('MainApp');
+        navigation.replace('AllScreen');
       } else {
-        navigation.replace('Login');
+        if (!isLogin) {
+          navigation.replace('Login');
+        }
       }
     }, 3000);
   }, []);
 
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const getToken = async () => {
     try {
       const token = await AsyncStorage.getItem('token');

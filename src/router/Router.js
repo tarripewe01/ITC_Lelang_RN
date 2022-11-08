@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, {useEffect} from 'react';
 import {
   AkunPage,
@@ -51,6 +52,26 @@ const Router = () => {
   }, []);
   return (
     <Stack.Navigator initialRouteName="Splash">
+      {isLogin == '' && isLogin == null ? (
+        <Stack.Screen
+          name="Auth"
+          component={Auth}
+          options={{headerShown: false}}
+        />
+      ) : (
+        <Stack.Screen
+          name="AllScreen"
+          component={AllScreen}
+          options={{headerShown: false}}
+        />
+      )}
+    </Stack.Navigator>
+  );
+};
+
+const Auth = () => {
+  return (
+    <Stack.Navigator initialRouteName="Splash">
       <Stack.Screen
         name="Splash"
         component={SplashPage}
@@ -66,6 +87,13 @@ const Router = () => {
         component={LoginPage}
         options={{headerShown: false}}
       />
+    </Stack.Navigator>
+  );
+};
+
+const AllScreen = () => {
+  return (
+    <Stack.Navigator>
       <Stack.Screen
         name="MainApp"
         component={MainApp}

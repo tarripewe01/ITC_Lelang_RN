@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -41,11 +39,11 @@ const LoginPage = ({navigation}) => {
           password: password,
         });
         const data = response.data;
-        console.log(data);
+        // console.log(data);
         if (response.status === 200) {
           await AsyncStorage.setItem('token', data.token);
           setLoading(false);
-          navigation.replace('MainApp');
+          navigation.replace('AllScreen');
           console.log('BERHASIL LOGIN');
         }
       } catch (error) {
