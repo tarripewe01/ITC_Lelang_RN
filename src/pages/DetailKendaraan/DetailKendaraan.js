@@ -62,13 +62,31 @@ const DetailKendaraan = ({route, navigation}) => {
                 </Text>
               </View>
               <Text style={styles.title}>{route.params.item?.nama_produk}</Text>
-              <Text>Harga Dasar</Text>
-              <Text style={styles.harga}>
-                {' '}
-                {currencyFormatter.format(route.params.item?.harga, {
-                  code: 'IDR',
-                })}
-              </Text>
+              {route.params.item?.status_lelang === 'Selesai' ? (
+                <>
+                  <Text>Harga Terbentuk</Text>
+                  <Text style={styles.harga2}>
+                    {' '}
+                    {currencyFormatter.format(
+                      route.params.item?.bid?.nominal_bid[0],
+                      {
+                        code: 'IDR',
+                      },
+                    )}
+                  </Text>
+                </>
+              ) : (
+                <>
+                  <Text>Harga Dasar</Text>
+                  <Text style={styles.harga}>
+                    {' '}
+                    {currencyFormatter.format(route.params.item?.harga, {
+                      code: 'IDR',
+                    })}
+                  </Text>
+                </>
+              )}
+
               <View style={{flexDirection: 'row'}}>
                 <Text style={{marginRight: 10}}>Jadwal Lelang</Text>
                 <Text>
@@ -220,6 +238,7 @@ const styles = StyleSheet.create({
   },
   title: {fontSize: 16, fontWeight: '600'},
   harga: {fontSize: 20, fontWeight: 'bold', color: Colors.blue},
+  harga2: {fontSize: 20, fontWeight: 'bold', color: 'red'},
   button: {
     marginTop: 20,
     marginBottom: 40,

@@ -50,7 +50,6 @@ const Pengaturan = ({route, navigation}) => {
         if (response.data !== null) {
           navigation.navigate('Home');
         }
-        await AsyncStorage.setItem('profile', response.data);
         setLoading(false);
         setAddress(response.data.address);
         setPhone(response.data.phone);

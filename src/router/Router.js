@@ -1,4 +1,3 @@
-/* eslint-disable eqeqeq */
 import React, {useEffect} from 'react';
 import {
   AkunPage,
@@ -35,11 +34,10 @@ const Router = () => {
   const getToken = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
-      if (token === null) {
-        return;
+      if (token !== null) {
+        console.log('TOKEN', token);
+        setIsLogin(token);
       }
-      console.log('TOKEN', token);
-      setIsLogin(token);
     } catch (e) {
       console.log(e);
     }
@@ -52,16 +50,16 @@ const Router = () => {
   }, []);
   return (
     <Stack.Navigator>
-      {isLogin == '' && isLogin == null ? (
+      {!isLogin ? (
         <Stack.Screen
           name="Auth"
-          component={Auth}
+          component={AuthStack}
           options={{headerShown: false}}
         />
       ) : (
         <Stack.Screen
           name="AllScreen"
-          component={AllScreen}
+          component={AllScreenStack}
           options={{headerShown: false}}
         />
       )}
@@ -69,7 +67,7 @@ const Router = () => {
   );
 };
 
-const Auth = () => {
+const AuthStack = () => {
   return (
     <Stack.Navigator initialRouteName="Splash">
       <Stack.Screen
@@ -91,7 +89,7 @@ const Auth = () => {
   );
 };
 
-const AllScreen = () => {
+const AllScreenStack = () => {
   return (
     <Stack.Navigator initialRouteName="MainApp">
       <Stack.Screen
@@ -144,7 +142,7 @@ const AllScreen = () => {
 const MainApp = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Akun"
+      initialRouteName="Home"
       activeColor={Colors.white}
       barStyle={{backgroundColor: Colors.blue}}>
       <Tab.Screen

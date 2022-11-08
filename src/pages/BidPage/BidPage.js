@@ -6,6 +6,7 @@ import React from 'react';
 import {
   Dimensions,
   Image,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -26,10 +27,19 @@ var currencyFormatter = require('currency-formatter');
 const BannerWidth = Dimensions.get('window').width;
 const BannerHeight = 250;
 
+const wait = timeout => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+};
+
 const BidPage = ({navigation, route}) => {
   const [nominal_bid, setNominalBid] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
-  const [isReload, setIsReload] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -71,7 +81,10 @@ const BidPage = ({navigation, route}) => {
           navigation.goBack('Detail Kendaraan');
         }}
       />
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <View>
           <Card>
             <View style={styles.containCabang}>
