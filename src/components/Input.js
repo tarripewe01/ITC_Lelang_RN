@@ -3,7 +3,7 @@ import {StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
 import {Colors} from '../utils/Color/Colors';
 
-const Input = ({placeholder, title, editable}) => {
+const Input = ({placeholder, title, editable, onChangeText, value}) => {
   return (
     <View style={{paddingHorizontal: 15, marginTop: 10}}>
       <Text>{title}</Text>
@@ -17,6 +17,8 @@ const Input = ({placeholder, title, editable}) => {
           marginTop: 5,
         }}
         editable={editable}
+        onChangeText={onChangeText}
+        value={value}
       />
     </View>
   );

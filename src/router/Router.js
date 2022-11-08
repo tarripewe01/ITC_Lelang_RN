@@ -47,7 +47,7 @@ const Router = () => {
   //   getToken();
   // }, []);
   return (
-    <Stack.Navigator initialRouteName="Splash">
+    <Stack.Navigator initialRouteName="Pengaturan Akun">
       <Stack.Screen
         name="Splash"
         component={SplashPage}
@@ -114,7 +114,7 @@ const Router = () => {
 const MainApp = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Akun"
       activeColor={Colors.white}
       barStyle={{backgroundColor: Colors.blue}}>
       <Tab.Screen
