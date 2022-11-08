@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -28,6 +29,7 @@ const BannerHeight = 250;
 const BidPage = ({navigation, route}) => {
   const [nominal_bid, setNominalBid] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
+  const [isReload, setIsReload] = React.useState(false);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -53,8 +55,8 @@ const BidPage = ({navigation, route}) => {
       // const data = response.data;
       console.log(response.data);
       if (response.status === 200) {
+        setNominalBid('');
         setLoading(false);
-        setNominalBid(response.data.nominal_bid);
       }
     } catch (error) {
       setLoading(false);
