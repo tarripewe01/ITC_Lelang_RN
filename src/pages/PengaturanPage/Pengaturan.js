@@ -3,20 +3,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import Input from '../../components/Input';
 import {Colors} from '../../utils/Color/Colors';
 
-const Pengaturan = () => {
-  const [nama, setNama] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [phone, setPhone] = React.useState('');
-  const [ktp, setKtp] = React.useState('');
-  const [npwp, setNpwp] = React.useState('');
-  const [bank, setBank] = React.useState('');
-  const [bank_account, setRek] = React.useState('');
-  const [address, setAddress] = React.useState('');
+const Pengaturan = ({route, navigation}) => {
+  const [address, setAddress] = React.useState(route.params.data?.address);
+  const [phone, setPhone] = React.useState(route.params.data?.phone);
+  const [ktp, setKtp] = React.useState(route.params.data?.ktp);
+  const [npwp, setNpwp] = React.useState(route.params.data?.npwp);
+  const [bank, setBank] = React.useState(route.params.data?.bank);
+  const [bank_account, setRek] = React.useState(
+    route.params.data?.bank_account,
+  );
 
   const [loading, setLoading] = React.useState(false);
 
@@ -24,7 +24,6 @@ const Pengaturan = () => {
     setLoading(true);
 
     const token = await AsyncStorage.getItem('token');
-    console.log('tok', token);
     const data = {
       phone: phone,
       address: address,
@@ -33,8 +32,6 @@ const Pengaturan = () => {
       bank: bank,
       bank_account: bank_account,
     };
-    //dimana debugnya ni?
-    console.log('data', data);
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -50,8 +47,17 @@ const Pengaturan = () => {
       // const data = response.data;
       console.log(response.data);
       if (response.status === 200) {
+        if (response.data !== null) {
+          navigation.navigate('Home');
+        }
         await AsyncStorage.setItem('profile', response.data);
         setLoading(false);
+        setAddress(response.data.address);
+        setPhone(response.data.phone);
+        setKtp(response.data.ktp);
+        setNpwp(response.data.npwp);
+        setBank(response.data.bank);
+        setRek(response.data.bank_account);
       }
     } catch (error) {
       setLoading(false);
@@ -60,15 +66,14 @@ const Pengaturan = () => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
       <View style={{marginTop: 10}}>
         <Input
-          placeholder="Nama Lengkap"
-          title="Nama Lengkap :"
+          placeholder="Alamat Lengkap"
+          title="Alamat Lengkap :"
           onChangeText={text => setAddress(text)}
           value={address}
         />
-        <Input placeholder="test@gmail.com" title="Email :" value={email} />
         <Input
           placeholder="+62812xxxxxxx"
           title="No. Hp :"
@@ -82,7 +87,7 @@ const Pengaturan = () => {
           value={ktp}
         />
         <Input
-          placeholder="No. NPWP"
+          placeholder="ex: 21.09.365.37883"
           title="No. NPWP :"
           onChangeText={text => setNpwp(text)}
           value={npwp}
@@ -96,7 +101,7 @@ const Pengaturan = () => {
         <Input
           placeholder="No. Rekening"
           title="No. Rekening :"
-          onChangeText={text => setRek(text)}
+          onChange={text => setRek(text)}
           value={bank_account}
         />
       </View>
@@ -106,9 +111,9 @@ const Pengaturan = () => {
         style={styles.button}
         // onPress={() => navigation.navigate('MainApp')}
         onPress={handleSubmit}>
-        Simpan
+        {loading ? 'Loading...' : 'Simpan'}
       </Button>
-    </View>
+    </ScrollView>
   );
 };
 

@@ -19,7 +19,7 @@ const SplashPage = ({navigation}) => {
     }, 3000);
   }, []);
 
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const getToken = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
