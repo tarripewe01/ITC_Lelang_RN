@@ -51,7 +51,7 @@ const Router = () => {
     getToken();
   }, []);
   return (
-    <Stack.Navigator initialRouteName="Splash">
+    <Stack.Navigator>
       {isLogin == '' && isLogin == null ? (
         <Stack.Screen
           name="Auth"
@@ -93,7 +93,7 @@ const Auth = () => {
 
 const AllScreen = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="MainApp">
       <Stack.Screen
         name="MainApp"
         component={MainApp}

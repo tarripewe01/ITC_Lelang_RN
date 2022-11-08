@@ -1,4 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 import React from 'react';
 import {
   Dimensions,
@@ -24,6 +26,41 @@ const BannerWidth = Dimensions.get('window').width;
 const BannerHeight = 250;
 
 const BidPage = ({navigation, route}) => {
+  const [nominal_bid, setNominalBid] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
+
+  const handleSubmit = async () => {
+    setLoading(true);
+
+    const token = await AsyncStorage.getItem('token');
+    const data = {
+      nominal_bid: nominal_bid,
+    };
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token ': token,
+      },
+    };
+
+    try {
+      const response = await axios.post(
+        'https://itc-finance.herokuapp.com/api/product/bid/' +
+          route.params.item._id,
+        data,
+        config,
+      );
+      // const data = response.data;
+      console.log(response.data);
+      if (response.status === 200) {
+        setLoading(false);
+        setNominalBid(response.data.nominal_bid);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
   return (
     <>
       <Header
@@ -147,13 +184,13 @@ const BidPage = ({navigation, route}) => {
         </View>
 
         <View style={{paddingHorizontal: 15}}>
-          <TextInput placeholder="ex: 15000000" style={styles.input} />
-          <Button
-            mode="contained"
-            style={styles.button}
-            //   onPress={() => navigation.navigate('Bid', {item: route.params.item})}
-          >
-            Bid Sekarang
+          <TextInput
+            placeholder="ex: 15000000"
+            style={styles.input}
+            onChangeText={text => setNominalBid(text)}
+          />
+          <Button mode="contained" style={styles.button} onPress={handleSubmit}>
+            {loading ? 'Proses...' : 'Bid Sekarang'}
           </Button>
         </View>
       </ScrollView>

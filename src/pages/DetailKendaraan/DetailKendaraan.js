@@ -185,16 +185,18 @@ const DetailKendaraan = ({route, navigation}) => {
           </Text>
         </Card>
 
-        {/* {route.params.item?.status_lelang === 'Aktif' ? ( */}
-        <Button
-          mode="contained"
-          style={styles.button}
-          onPress={() => navigation.navigate('Bid', {item: route.params.item})}>
-          Bid Sekarang
-        </Button>
-        {/* ) : (
+        {route.params.item?.status_lelang === 'Aktif' ? (
+          <Button
+            mode="contained"
+            style={styles.button}
+            onPress={() =>
+              navigation.navigate('Bid', {item: route.params.item})
+            }>
+            Bid Sekarang
+          </Button>
+        ) : (
           ''
-        )} */}
+        )}
       </ScrollView>
     </>
   );

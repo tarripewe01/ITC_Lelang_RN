@@ -16,18 +16,22 @@ import {Colors} from '../../utils/Color/Colors';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import Axios from 'axios';
 import moment from 'moment';
+import Indicator from '../../components/Indicator';
 
 var currencyFormatter = require('currency-formatter');
 
 const MobilPage = ({navigation}) => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const loadData = async () => {
+    setLoading(true);
     await Axios.get(
       'https://itc-finance.herokuapp.com/api/product/filter/lelang?kategori=Mobil',
     ).then(response => {
       // console.log(response.data);
       setData(response.data);
+      setLoading(false);
     });
   };
 
@@ -41,51 +45,56 @@ const MobilPage = ({navigation}) => {
         <TextInput placeholder="Cari Mobil ..." />
         <MaterialCommunityIcons name="magnify" color={Colors.blue} size={24} />
       </View>
-      <FlatList
-        keyExtractor={data => data.id}
-        data={data}
-        numColumns={2}
-        renderItem={({item}) => (
-          <TouchableWithoutFeedback
-            onPress={() => {
-              navigation.navigate('Detail Kendaraan', {item: item});
-            }}>
-            <Card style={styles.card}>
-              <Card.Cover
-                source={{
-                  uri: 'https://itc-finance.herokuapp.com' + item.photo_path[0],
-                }}
-              />
-              <Card.Content style={{paddingHorizontal: 5}}>
-                <Text style={styles.text}>{item.nama_produk}</Text>
-                <View style={{flexDirection: 'row', marginTop: 3}}>
-                  <MaterialCommunityIcons
-                    name="calendar"
-                    color={Colors.blackJet}
-                    size={12}
-                  />
-                  <Text style={styles.text}>
-                    {moment(item?.tanggal_mulai).format('DD/MM/YYYY')}
+      {loading ? (
+        <Indicator />
+      ) : (
+        <FlatList
+          keyExtractor={data => data.id}
+          data={data}
+          numColumns={2}
+          renderItem={({item}) => (
+            <TouchableWithoutFeedback
+              onPress={() => {
+                navigation.navigate('Detail Kendaraan', {item: item});
+              }}>
+              <Card style={styles.card}>
+                <Card.Cover
+                  source={{
+                    uri:
+                      'https://itc-finance.herokuapp.com' + item.photo_path[0],
+                  }}
+                />
+                <Card.Content style={{paddingHorizontal: 5}}>
+                  <Text style={styles.text}>{item.nama_produk}</Text>
+                  <View style={{flexDirection: 'row', marginTop: 3}}>
+                    <MaterialCommunityIcons
+                      name="calendar"
+                      color={Colors.blackJet}
+                      size={12}
+                    />
+                    <Text style={styles.text}>
+                      {moment(item?.tanggal_mulai).format('DD/MM/YYYY')}
+                    </Text>
+                  </View>
+                  <View style={{flexDirection: 'row', marginTop: 3}}>
+                    <MaterialCommunityIcons
+                      name="map-marker"
+                      color={Colors.blackJet}
+                      size={12}
+                    />
+                    <Text style={styles.text}>ITC {item.cabang}</Text>
+                  </View>
+                  <Text style={styles.harga}>
+                    {currencyFormatter.format(item?.harga, {
+                      code: 'IDR',
+                    })}
                   </Text>
-                </View>
-                <View style={{flexDirection: 'row', marginTop: 3}}>
-                  <MaterialCommunityIcons
-                    name="map-marker"
-                    color={Colors.blackJet}
-                    size={12}
-                  />
-                  <Text style={styles.text}>ITC {item.cabang}</Text>
-                </View>
-                <Text style={styles.harga}>
-                  {currencyFormatter.format(item?.harga, {
-                    code: 'IDR',
-                  })}
-                </Text>
-              </Card.Content>
-            </Card>
-          </TouchableWithoutFeedback>
-        )}
-      />
+                </Card.Content>
+              </Card>
+            </TouchableWithoutFeedback>
+          )}
+        />
+      )}
     </View>
   );
 };
