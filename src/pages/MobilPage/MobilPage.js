@@ -70,7 +70,7 @@ const MobilPage = ({navigation}) => {
                     <Image
                       source={require('../../assets/image/sold.png')}
                       style={{
-                        width: 100,
+                        width: 120,
                         height: 100,
                         alignSelf: 'center',
                         marginTop: 40,
