@@ -43,59 +43,6 @@ const JadwalLelangMobil = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      {/* <Text>Lelang Hari Ini</Text>
-      {dataHariIni.map((item, index) => {
-        return (
-          <TouchableWithoutFeedback
-            key={index}
-            onPress={() =>
-              navigation.navigate('Detail Kendaraan', {item: item})
-            }>
-            <Card style={{marginBottom: 10}}>
-              <View style={{flexDirection: 'row'}}>
-                <View>
-                  <Image
-                    source={{
-                      uri:
-                        'https://itc-finance.herokuapp.com' +
-                        item.photo_path[0],
-                    }}
-                    style={styles.image}
-                  />
-                </View>
-                <View style={styles.content}>
-                  <View>
-                    <Text style={styles.title}>ITC {item.cabang}</Text>
-                    <View style={styles.containIcon}>
-                      <MaterialCommunityIcons
-                        name="calendar"
-                        color={Colors.grey}
-                        size={15}
-                      />
-                      <Text style={styles.textIcon}>{item.tanggal_mulai}</Text>
-                    </View>
-                    <View style={styles.containIcon}>
-                      <MaterialCommunityIcons
-                        name="timer"
-                        color={Colors.grey}
-                        size={15}
-                      />
-                      <Text style={styles.textIcon}>
-                        {item.waktu_mulai} WIB
-                      </Text>
-                    </View>
-                  </View>
-                  <View style={styles.containLive}>
-                    <Text style={styles.textLive}>LIVE</Text>
-                  </View>
-                </View>
-              </View>
-            </Card>
-          </TouchableWithoutFeedback>
-        );
-      })}
-
-      <Text>Lelang Yang Akan Datang</Text> */}
       {data.map((item, index) => (
         <TouchableWithoutFeedback
           key={index}
@@ -132,7 +79,9 @@ const JadwalLelangMobil = ({navigation}) => {
                   </View>
                 </View>
                 <View style={styles.containLive}>
-                  <Text style={styles.textLive}>LIVE</Text>
+                  <Text style={styles.textLive}>
+                    {item.status_lelang === 'Selesai' ? 'Selesai' : 'Live'}
+                  </Text>
                 </View>
               </View>
             </View>

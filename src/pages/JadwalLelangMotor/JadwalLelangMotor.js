@@ -66,7 +66,9 @@ const JadwalLelangMotor = ({navigation}) => {
                   </View>
                 </View>
                 <View style={styles.containLive}>
-                  <Text style={styles.textLive}>LIVE</Text>
+                  <Text style={styles.textLive}>
+                    {item.status_lelang === 'Selesai' ? 'Selesai' : 'Live'}
+                  </Text>
                 </View>
               </View>
             </View>

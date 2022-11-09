@@ -3,6 +3,8 @@
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
+  Image,
+  ImageBackground,
   StyleSheet,
   Text,
   TextInput,
@@ -58,12 +60,26 @@ const MobilPage = ({navigation}) => {
                 navigation.navigate('Detail Kendaraan', {item: item});
               }}>
               <Card style={styles.card}>
-                <Card.Cover
+                <ImageBackground
+                  style={{width: '100%', height: 200}}
                   source={{
                     uri:
-                      'https://itc-finance.herokuapp.com' + item.photo_path[0],
-                  }}
-                />
+                      'https://itc-finance.herokuapp.com' + item?.photo_path[0],
+                  }}>
+                  {item.status_lelang === 'Selesai' ? (
+                    <Image
+                      source={require('../../assets/image/sold.png')}
+                      style={{
+                        width: 100,
+                        height: 100,
+                        alignSelf: 'center',
+                        marginTop: 40,
+                      }}
+                    />
+                  ) : (
+                    ''
+                  )}
+                </ImageBackground>
                 <Card.Content style={{paddingHorizontal: 5}}>
                   <Text style={styles.text}>{item.nama_produk}</Text>
                   <View style={{flexDirection: 'row', marginTop: 3}}>
@@ -84,11 +100,33 @@ const MobilPage = ({navigation}) => {
                     />
                     <Text style={styles.text}>ITC {item.cabang}</Text>
                   </View>
-                  <Text style={styles.harga}>
-                    {currencyFormatter.format(item?.harga, {
-                      code: 'IDR',
-                    })}
+                  <Text
+                    style={{
+                      fontWeight:
+                        item.status_lelang === 'Selesai' ? '' : 'bold',
+                      fontSize: item.status_lelang === 'Selesai' ? 12 : 16,
+                      color: Colors.blue,
+                      marginTop: 10,
+                      textDecorationLine:
+                        item.status_lelang === 'Selesai' ? 'line-through' : '',
+                    }}>
+                    {currencyFormatter.format(item.harga, {code: 'IDR'})}
                   </Text>
+                  {item.status_lelang === 'Selesai' ? (
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: 16,
+                        color: 'red',
+                        marginTop: 3,
+                      }}>
+                      {currencyFormatter.format(item.bids[0].nominal_bid, {
+                        code: 'IDR',
+                      })}
+                    </Text>
+                  ) : (
+                    ''
+                  )}
                 </Card.Content>
               </Card>
             </TouchableWithoutFeedback>

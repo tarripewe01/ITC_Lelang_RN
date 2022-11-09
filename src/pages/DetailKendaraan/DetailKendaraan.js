@@ -3,6 +3,7 @@ import React from 'react';
 import {
   Dimensions,
   Image,
+  ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
@@ -41,10 +42,25 @@ const DetailKendaraan = ({route, navigation}) => {
           pageSize={BannerWidth}>
           {route.params.item?.photo_path.map((image, idx) => (
             <View key={idx}>
-              <Image
-                style={{width: BannerWidth, height: BannerHeight}}
-                source={{uri: 'https://itc-finance.herokuapp.com' + image}}
-              />
+              <ImageBackground
+                style={{width: '100%', height: 200}}
+                source={{
+                  uri: 'https://itc-finance.herokuapp.com' + image,
+                }}>
+                {route.params.item.status_lelang === 'Selesai' ? (
+                  <Image
+                    source={require('../../assets/image/sold.png')}
+                    style={{
+                      width: 160,
+                      height: 140,
+                      alignSelf: 'center',
+                      marginTop: 20,
+                    }}
+                  />
+                ) : (
+                  ''
+                )}
+              </ImageBackground>
             </View>
           ))}
         </Carousel>
@@ -68,7 +84,7 @@ const DetailKendaraan = ({route, navigation}) => {
                   <Text style={styles.harga2}>
                     {' '}
                     {currencyFormatter.format(
-                      route.params.item?.bid?.nominal_bid[0],
+                      route.params.item.bids[0].nominal_bid,
                       {
                         code: 'IDR',
                       },
