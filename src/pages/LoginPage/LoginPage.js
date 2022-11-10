@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import React, {useState} from 'react';
 import {
@@ -17,40 +19,44 @@ import {Colors} from '../../utils/Color/Colors';
 
 const Logo = require('../../assets/image/logo.png');
 
-const LoginPage = ({navigation}) => {
+const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState(null);
+
+  const navigation = useNavigation();
 
   const handleLogin = async () => {
+    navigation.replace('MainApp');
     if (email === '') {
       setEmailError('Email tidak boleh kosong');
     } else if (password === '') {
       setPasswordError('Password tidak boleh kosong');
     }
 
-    if (email !== '' && password !== '') {
-      setLoading(true);
-      try {
-        const response = await axios.post('http://192.168.1.5:9000/api/auth', {
-          email: email,
-          password: password,
-        });
-        const data = response.data;
-        console.log(data);
-        if (response.status === 200) {
-          await AsyncStorage.setItem('token', data.token);
-          setLoading(false);
-          // navigation.replace('AllScreen');
-          console.log('BERHASIL LOGIN');
-        }
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
-      }
-    }
+    // if (email !== '' && password !== '') {
+    //   setLoading(true);
+    //   try {
+    //     const response = await axios.post('http://192.168.1.5:9000/api/auth', {
+    //       email: email,
+    //       password: password,
+    //     });
+    //     const data = response.data;
+    //     console.log(data.token);
+    //     if (response.status === 200) {
+    //       await AsyncStorage.setItem('token', data.token);
+    //       setToken(data.token);
+    //       // navigation.replace('MainApp');
+    //       setLoading(false);
+    //     }
+    //   } catch (error) {
+    //     setLoading(false);
+    //     console.log(error);
+    //   }
+    // }
   };
 
   return (

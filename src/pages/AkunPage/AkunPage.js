@@ -1,19 +1,25 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React, {useEffect} from 'react';
 import {Image, Text, View} from 'react-native';
 import Gap from '../../components/Gap';
+import Indicator from '../../components/Indicator';
 import ListOption from './components/ListOption';
 
 const AkunPage = ({navigation}) => {
   const [dataUser, setDataUser] = React.useState({});
-  console.log('USER', dataUser);
+  const [loading, setLoading] = React.useState(false);
+  const [token, setToken] = React.useState(false);
+
   useEffect(() => {
     loadDataUser();
   }, []);
 
   const loadDataUser = async () => {
+    setLoading(true);
+
     let token = await AsyncStorage.getItem('token');
     console.log('TOKEN', token);
 
@@ -24,24 +30,29 @@ const AkunPage = ({navigation}) => {
     };
 
     await axios
-      .get('http://192.168.1.5:9000/api/profile/me', config)
+      .get('https://itc-finance.herokuapp.com/api/profile/me', config)
       .then(response => {
         console.log(response.data);
         if (response.status === 200) {
           setDataUser(response.data);
+          setLoading(false);
         }
       });
   };
 
   const handleLogout = async () => {
-    console.log('click');
+    setLoading(true);
     try {
       await AsyncStorage.removeItem('token');
-      navigation.replace('Splash');
+      setToken(null);
+      setLoading(false);
+      // navigation.replace('Auth');
     } catch (e) {
       console.log(e);
     }
   };
+
+  console.log(token);
 
   return (
     <View
@@ -51,23 +62,34 @@ const AkunPage = ({navigation}) => {
         flex: 1,
         paddingTop: 20,
       }}>
-      <View>
-        <Image
-          source={{
-            uri: dataUser?.user?.avatar,
-          }}
-          style={{width: 100, height: 100, alignSelf: 'center', marginTop: 30}}
-        />
-      </View>
-
-      <View style={{alignSelf: 'center'}}>
-        <Text style={{fontWeight: 'bold', fontSize: 20, textAlign: 'center'}}>
-          {dataUser?.user?.name}
-        </Text>
-        <Text style={{fontSize: 14, textAlign: 'center'}}>
-          {dataUser?.user?.email}
-        </Text>
-      </View>
+      {loading ? (
+        <Indicator />
+      ) : (
+        <>
+          <View>
+            <Image
+              source={{
+                uri: dataUser?.user?.avatar,
+              }}
+              style={{
+                width: 100,
+                height: 100,
+                alignSelf: 'center',
+                marginTop: 30,
+              }}
+            />
+          </View>
+          <View style={{alignSelf: 'center'}}>
+            <Text
+              style={{fontWeight: 'bold', fontSize: 20, textAlign: 'center'}}>
+              {dataUser?.user?.name}
+            </Text>
+            <Text style={{fontSize: 14, textAlign: 'center'}}>
+              {dataUser?.user?.email}
+            </Text>
+          </View>
+        </>
+      )}
 
       <View>
         <Gap height={20} />
