@@ -41,15 +41,16 @@ const AkunPage = ({navigation}) => {
   };
 
   const handleLogout = async () => {
-    setLoading(true);
-    try {
-      await AsyncStorage.removeItem('token');
-      setToken(null);
-      setLoading(false);
-      // navigation.replace('Auth');
-    } catch (e) {
-      console.log(e);
-    }
+    navigation.replace('Auth');
+    // setLoading(true);
+    // try {
+    //   await AsyncStorage.removeItem('token');
+    //   setToken(null);
+    //   setLoading(false);
+    //   // navigation.replace('Auth');
+    // } catch (e) {
+    //   console.log(e);
+    // }
   };
 
   console.log(token);
